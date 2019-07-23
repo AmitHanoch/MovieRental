@@ -29,15 +29,41 @@
 }
 
 .card {
+    position: relative;
     border-radius: 4px;
     background-color: #F3DC68;
-    padding-left: 16px;
-    padding-right: 16px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
+    padding-bottom: 4px;
 }
 
 /* On mouse-over, add a deeper shadow */
 .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.card-content {
+    position: absolute;
+    top: 15%;
+    height: 100%;
+    width: 100%;
+}
+
+.card-title {
+    padding: 8px;
+    height: 15%;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    width: 100%;
+    background-color: #D62503;
+    color: white;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.card-title h3 {
+    margin: 0 auto;
 }
