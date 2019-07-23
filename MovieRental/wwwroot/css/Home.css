@@ -38,12 +38,14 @@
 .list-card {
     width: 40%;
     margin: 0 auto;
+    height: 360px;
 }
 
 .list {
-    padding-top: 16px;
     width: 410px;
     margin: 0 auto;
+    padding: 8px;
+    padding-top: 28px;
 }
 
 .list ol {
