@@ -20,6 +20,7 @@ namespace MovieRental.Controllers
         }
 
         // GET: Loans
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var movieRentalContext = _context.Loan.Include(l => l.Customer);
@@ -68,28 +69,29 @@ namespace MovieRental.Controllers
         }
 
         // GET: Loans/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [HttpGet]
+        public async Task<IActionResult> Details(int? MovieId, int? CustomerId)
         {
-            if (id == null)
+            if (MovieId == null || CustomerId == null)
             {
-                return NotFound();
+                return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest);
             }
 
-            var loan = await _context.Loan
-                .Include(l => l.Customer)
-                .FirstOrDefaultAsync(m => m.MovieId == id);
+            Loan loan = await _context.Loan.FindAsync(MovieId, CustomerId);
             if (loan == null)
             {
-                return NotFound();
+                return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound);
             }
 
             return View(loan);
         }
 
         // GET: Loans/Create
+        [HttpGet]
         public IActionResult Create()
         {
-            ViewData["CustomerId"] = new SelectList(_context.Customer, "Id", "Address");
+            ViewBag.MovieId = new SelectList(_context.Movie, "Id", "Name");
+            ViewBag.CustomerId = new SelectList(_context.Customer, "Id", "PersonalId");
             return View();
         }
 
@@ -102,28 +104,38 @@ namespace MovieRental.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(loan);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (await _context.Loan.SingleOrDefaultAsync(l => l.CustomerId == loan.CustomerId && l.MovieId == loan.MovieId) == null)
+                {
+                    _context.Add(loan);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customer, "Id", "Address", loan.CustomerId);
+            ViewBag.MovieId = new SelectList(_context.Movie, "Id", "Name", loan.MovieId);
+            ViewBag.CustomerId = new SelectList(_context.Customer, "Id", "PersonalId", loan.CustomerId);
             return View(loan);
         }
 
         // GET: Loans/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? movieId, int? customerId)
         {
-            if (id == null)
+            if (movieId == null || customerId == null)
             {
-                return NotFound();
+                return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest);
             }
 
-            var loan = await _context.Loan.FindAsync(id);
+            Loan loan = await _context.Loan.FindAsync(movieId, customerId);
             if (loan == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customer, "Id", "Address", loan.CustomerId);
+            ViewBag.MovieId = new SelectList(_context.Movie, "Id", "Name", loan.MovieId);
+            ViewBag.CustomerId = new SelectList(_context.Customer, "Id", "FirstName", loan.CustomerId);
             return View(loan);
         }
 
@@ -132,51 +144,37 @@ namespace MovieRental.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MovieId,CustomerId,LoanDate,ReturnDate")] Loan loan)
+        public async Task<IActionResult> Edit([Bind("MovieId,CustomerId,LoanDate,ReturnDate")] Loan loan)
         {
-            if (id != loan.MovieId)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
+                if (_context.Loan.AsNoTracking().SingleOrDefault(l => l.CustomerId == loan.CustomerId && l.MovieId == loan.MovieId) != null)
                 {
                     _context.Update(loan);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!LoanExists(loan.MovieId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customer, "Id", "Address", loan.CustomerId);
+
+            ViewBag.BookId = new SelectList(_context.Movie, "Id", "Name", loan.MovieId);
+            ViewBag.CustomerId = new SelectList(_context.Customer, "Id", "FirstName", loan.CustomerId);
             return View(loan);
         }
 
         // GET: Loans/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? movieId, int? customerId)
         {
-            if (id == null)
+            if (movieId == null || customerId == null)
             {
-                return NotFound();
+                return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound);
             }
 
-            var loan = await _context.Loan
-                .Include(l => l.Customer)
-                .FirstOrDefaultAsync(m => m.MovieId == id);
+            Loan loan = await _context.Loan.FindAsync(movieId, customerId);
             if (loan == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             return View(loan);
@@ -185,17 +183,45 @@ namespace MovieRental.Controllers
         // POST: Loans/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int movieId, int customerId)
         {
-            var loan = await _context.Loan.FindAsync(id);
+            Loan loan = await _context.Loan.FindAsync(movieId, customerId);
             _context.Loan.Remove(loan);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LoanExists(int id)
+        public IActionResult Login()
         {
-            return _context.Loan.Any(e => e.MovieId == id);
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(string userName, string password)
+        {
+            User authUser = await _context.User.SingleOrDefaultAsync(user => user.Username == userName &&
+                                                     user.Password == password);
+
+            if (authUser != null)
+            {
+                //TODO : add to session "LoggedIn" property that has RoleId of user for authentication in cshtml file.
+                //       Search for something similar to System.Web.HttpContext.current.Session in ASP .NET framework.
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
     }
 }
