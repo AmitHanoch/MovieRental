@@ -64,6 +64,14 @@
     height: 200px;
 }
 
+.movie-card .card-title {
+    height: 25%;
+}
+
+.movie-card .card-content {
+    top: 25%;
+}
+
 .detials-columns-container {
     column-count: 2;
     column-gap: 8px;
