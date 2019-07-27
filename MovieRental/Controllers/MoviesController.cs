@@ -77,17 +77,7 @@ namespace MovieRental.Controllers
       // GET: Movie/Details/5
         public ActionResult Details(int? id)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            //Book book = db.Books.Where(x => x.Id == id).Include(x => x.Genre).FirstOrDefault();
-            //if (book == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            //return View(book);
-            return View();
+           return View(_moviesFromDB[0]);
         }
 
         // GET: Movie/Create

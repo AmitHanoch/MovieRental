@@ -4,24 +4,24 @@
     ViewData["Title"] = "Movies Page";
 }
 
-<div class="fade-in-animation">
+<section class="fade-in-animation">
 
     <h1 id="moviesTitle">Our Movies</h1>
-    <div class="table-wrapper card">
+    <section class="table-wrapper card">
         <table class="table">
             <thead>
                 <tr class="table-header">
                     <th>
-                        @Html.DisplayNameFor(model => model.Name)
+                        <span> @Html.DisplayNameFor(model => model.Name) </span>
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.ReleaseDate)
+                        <span> @Html.DisplayNameFor(model => model.ReleaseDate) </span>
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Producer)
+                        <span> @Html.DisplayNameFor(model => model.Producer) </span>
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Genre)
+                        <span>  @Html.DisplayNameFor(model => model.Genre) </span>
                     </th>
                     <th></th>
                 </tr>
@@ -31,16 +31,16 @@
                 {
                     <tr class="table-row">
                         <td class="table-cell">
-                            @Html.DisplayFor(modelItem => item.Name)
+                            <span> @Html.DisplayFor(modelItem => item.Name) </span>
                         </td>
                         <td class="table-cell">
-                            @Html.DisplayFor(modelItem => item.ReleaseDate)
+                            <span> @Html.DisplayFor(modelItem => item.ReleaseDate) </span>
                         </td>
                         <td class="table-cell">
-                            @Html.DisplayFor(modelItem => item.Producer.Name)
+                            <span> @Html.DisplayFor(modelItem => item.Producer.Name) </span>
                         </td>
                         <td class="table-cell">
-                            @Html.DisplayFor(modelItem => item.Genre.Name)
+                            <span> @Html.DisplayFor(modelItem => item.Genre.Name) </span>
                         </td>
                         <td class="table-cell">
                             <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
@@ -51,5 +51,5 @@
                 }
             </tbody>
         </table>
-    </div>
-</div>
+    </section>
+</section>
