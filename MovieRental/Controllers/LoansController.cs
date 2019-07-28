@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MovieRental.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace MovieRental.Controllers
 {
@@ -204,8 +205,7 @@ namespace MovieRental.Controllers
 
             if (authUser != null)
             {
-                //TODO : add to session "LoggedIn" property that has RoleId of user for authentication in cshtml file.
-                //       Search for something similar to System.Web.HttpContext.current.Session in ASP .NET framework.
+                HttpContext.Session.SetInt32("LoggedIn", authUser.RoleId);
                 return RedirectToAction(nameof(Index));
             }
             else
