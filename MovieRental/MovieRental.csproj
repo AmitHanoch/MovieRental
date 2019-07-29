@@ -16,6 +16,9 @@
     <Content Remove="wwwroot\images\Popcorn.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Controllers\MoviesController.css" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="wwwroot\css\Home.css" />
     <None Include="wwwroot\images\Popcorn.jpg" />
   </ItemGroup>
