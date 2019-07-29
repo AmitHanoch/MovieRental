@@ -1,7 +1,7 @@
 ﻿@model MovieRental.Models.Loan
 
 @{
-    ViewData["Title"] = "Details";
+    ViewBag.Title = "Details";
 }
 
 <h2>Details</h2>
@@ -11,20 +11,41 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.Movie.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Movie.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.PersonalID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.PersonalID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LoanDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoanDate)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.ReturnDate)
         </dt>
+
         <dd>
             @Html.DisplayFor(model => model.ReturnDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Customer)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Customer.Address)
         </dd>
     </dl>
 </div>
 <div>
+<div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Back to List", "Index")
+</div>
 </div>

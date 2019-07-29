@@ -28,7 +28,7 @@ namespace MovieRental.Controllers
             return View(await movieRentalContext.ToListAsync());
         }
 
-        public async Task<string> getRecommendedBook(string customerId)
+        public async Task<string> getRecommendedMovie(string customerId)
         {
             if (customerId == null) throw new ArgumentException("customer id is required!");
 
@@ -158,7 +158,7 @@ namespace MovieRental.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.BookId = new SelectList(_context.Movie, "Id", "Name", loan.MovieId);
+            ViewBag.MovieId = new SelectList(_context.Movie, "Id", "Name", loan.MovieId);
             ViewBag.CustomerId = new SelectList(_context.Customer, "Id", "FirstName", loan.CustomerId);
             return View(loan);
         }
