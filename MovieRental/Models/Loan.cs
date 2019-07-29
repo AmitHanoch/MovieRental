@@ -16,22 +16,16 @@ namespace MovieRental.Models
         public int CustomerId { get; set; }
 
         [Key, Column(Order = 2)]
-        [Display(Name = "Loan Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime LoanDate { get; set; }
 
         [Required]
-        [Display(Name = "Return Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime ReturnDate { get; set; }
 
         [ForeignKey("MovieId")]
-        [Display(Name = "Movie Name")]
         public virtual Movie Movie { get; set; }
 
-        [Display(Name = "Customer Id")]
         [ForeignKey("CustomerId")]
         public virtual Customer Customer { get; set; }
     }
