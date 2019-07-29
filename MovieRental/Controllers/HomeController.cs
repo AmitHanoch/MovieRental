@@ -1,8 +1,8 @@
 ﻿
-using System.Diagnostics;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MovieRental.Models;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace MovieRental.Controllers
 {
