@@ -27,9 +27,9 @@ namespace MovieRental.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime ReturnDate { get; set; }
 
-        [ForeignKey("BookId")]
-        [Display(Name = "Book Name")]
-        public virtual Movie Book { get; set; }
+        [ForeignKey("MovieId")]
+        [Display(Name = "Movie Name")]
+        public virtual Movie Movie { get; set; }
 
         [Display(Name = "Customer Id")]
         [ForeignKey("CustomerId")]

@@ -18,6 +18,7 @@ namespace MovieRental.Controllers
         }
 
         // GET: Branches
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Branch.ToListAsync());
