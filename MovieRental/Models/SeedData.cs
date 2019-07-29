@@ -19,27 +19,22 @@ namespace MovieRental.Models
                     context.Genre.AddRange(
                     new Genre
                     {
-                        Id = 1,
                         Name = "Kids"
                     },
                     new Genre
                     {
-                        Id = 2,
                         Name = "Fantasy"
                     },
                     new Genre
                     {
-                        Id = 3,
                         Name = "Drama"
                     },
                     new Genre
                     {
-                        Id = 4,
                         Name = "Comics"
                     },
                     new Genre
                     {
-                        Id = 5,
                         Name = "Cooking"
                     });
                 } 
