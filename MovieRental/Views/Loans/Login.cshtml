@@ -1,0 +1,13 @@
+﻿@using Microsoft.AspNetCore.Http;
+
+@{
+    int? loggedInUserRoleId = Context.Session.GetInt32("LoggedIn");
+    if (loggedInUserRoleId.HasValue 
+        && (loggedInUserRoleId == (int) MovieRental.General.Roles.MANAGER || loggedInUserRoleId == (int) MovieRental.General.Roles.STORE_OWNER))
+    {
+
+    }
+}
+
+<h2>Login</h2>
+
