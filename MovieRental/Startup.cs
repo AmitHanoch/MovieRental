@@ -62,8 +62,6 @@ namespace MovieRental
 
             app.UseSession();
 
-            app.UseStaticFiles();
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
