@@ -31,5 +31,7 @@ namespace MovieRental.Models
         [ForeignKey("GenreId")]
         public Genre Genre { get; set; }
 
+        [DataType(DataType.Currency)]
+        public decimal Price { get; set; }
     }
 }
