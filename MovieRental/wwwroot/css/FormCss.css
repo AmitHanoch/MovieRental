@@ -1,0 +1,10 @@
+﻿.form-horizontal {
+    justify-content: center;
+    display: grid;
+}
+
+h4 {
+    font-size: 24pt;
+    font-weight: bold;
+    text-align:center;
+}
