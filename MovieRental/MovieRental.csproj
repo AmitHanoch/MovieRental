@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190727095445_Initial.cs" />
+    <Compile Remove="Migrations\20190727095445_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190729162641_Initial.cs" />
+    <Compile Remove="Migrations\20190729162641_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190729164111_Initial.cs" />
+    <Compile Remove="Migrations\20190729164111_Initial.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Accord.MachineLearning" Version="3.8.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
