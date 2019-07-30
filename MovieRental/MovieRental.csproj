@@ -13,6 +13,16 @@
     <Compile Remove="Migrations\20190729164111_Initial.Designer.cs" />
     <Compile Remove="Migrations\20190729164456_Initial.cs" />
     <Compile Remove="Migrations\20190729164456_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190730112855_Initial.cs" />
+    <Compile Remove="Migrations\20190730112855_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190730123103_Initial.cs" />
+    <Compile Remove="Migrations\20190730123103_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190730123346_Initials.cs" />
+    <Compile Remove="Migrations\20190730123346_Initials.Designer.cs" />
+    <Compile Remove="Migrations\20190730123356_Initial.cs" />
+    <Compile Remove="Migrations\20190730123356_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190730123509_Initial.cs" />
+    <Compile Remove="Migrations\20190730123509_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,8 +42,5 @@
   <ItemGroup>
     <None Include="wwwroot\css\Home.css" />
     <None Include="wwwroot\images\Popcorn.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>
