@@ -5,7 +5,7 @@ namespace MovieRental.Models
     public class Genre
     {
         [Key]
-        public int Id { get; set; }
+        public int GenreId { get; set; }
 
         [Required]
         public string Name { get; set; }
