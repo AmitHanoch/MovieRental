@@ -1,33 +1,52 @@
-﻿@model MovieRental.Models.Loan
+﻿@using Microsoft.AspNetCore.Http;
+@model MovieRental.Models.Loan
 
 @{
-    ViewData["Title"] = "Edit";
+    int? loggedInUserRoleId = Context.Session.GetInt32("LoggedIn");
+    if (loggedInUserRoleId.HasValue
+        && (loggedInUserRoleId != (int)MovieRental.General.Roles.MANAGER || loggedInUserRoleId != (int)MovieRental.General.Roles.STORE_OWNER))
+    {
+        Url.Action("Login", "LoansController");
+    }
 }
 
-<h2>Edit</h2>
+@{
+    ViewBag.Title = "Edit";
+}
 
-<h4>Loan</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="MovieId" />
-            <input type="hidden" asp-for="CustomerId" />
-            <input type="hidden" asp-for="LoanDate" />
-            <div class="form-group">
-                <label asp-for="ReturnDate" class="control-label"></label>
-                <input asp-for="ReturnDate" class="form-control" />
-                <span asp-validation-for="ReturnDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        @Html.ActionLink(" Back", "Index", "", new { @class = "glyphicon glyphicon-chevron-left Icon" })
     </div>
-</div>
+    <h4>Edit Loan</h4>
+    <hr />
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+    <section class="form-horizontal">
+        @Html.HiddenFor(model => model.MovieId)
+        @Html.HiddenFor(model => model.CustomerId)
+
+
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.LoanDate, "Loan Date", htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.EditorFor(model => model.LoanDate, new { htmlAttributes = new { @class = "form-control", @style = "width:300px", @type = "date" } })
+            </div>
+        </div>
+
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.ReturnDate, "Return Date", htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.EditorFor(model => model.ReturnDate, new { htmlAttributes = new { @class = "form-control", @style = "width:300px", @type = "date" } })
+            </div>
+        </div>
+
+        <div>
+            <input type="submit" value="Edit" class="btn btn-success" style="width:100%;margin-top:10px" />
+        </div>
+    </section>
+}
 

@@ -1,44 +1,86 @@
-﻿@model MovieRental.Models.Loan
+﻿@using Microsoft.AspNetCore.Http;
+@model MovieRental.Models.Loan
 
 @{
-    ViewData["Title"] = "Create";
+    int? loggedInUserRoleId = Context.Session.GetInt32("LoggedIn");
+    if (loggedInUserRoleId.HasValue
+        && (loggedInUserRoleId != (int)MovieRental.General.Roles.MANAGER || loggedInUserRoleId != (int)MovieRental.General.Roles.STORE_OWNER))
+    {
+        Url.Action("Login", "LoansController");
+    }
 }
 
-<h2>Create</h2>
+@{
+    ViewBag.Title = "Create";
+}
 
-<h4>Loan</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="MovieId" class="control-label"></label>
-                <input asp-for="MovieId" class="form-control" />
-                <span asp-validation-for="MovieId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CustomerId" class="control-label"></label>
-                <select asp-for="CustomerId" class ="form-control" asp-items="ViewBag.CustomerId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="LoanDate" class="control-label"></label>
-                <input asp-for="LoanDate" class="form-control" />
-                <span asp-validation-for="LoanDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReturnDate" class="control-label"></label>
-                <input asp-for="ReturnDate" class="form-control" />
-                <span asp-validation-for="ReturnDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        @Html.ActionLink(" Back", "Index", "", new { @class = "glyphicon glyphicon-chevron-left Icon" })
     </div>
-</div>
+    <h4>Loan book</h4>
+    <hr />
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <section class="form-horizontal">
 
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.Customer.PersonalId, htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.DropDownList("CustomerId", null, htmlAttributes: new { @class = "form-control", @id = "CustomerId", @onchange = "getRecommendedBook()" })
+            </div>
+        </div>
+
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.Movie.Name, htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.DropDownList("MovieId", null, htmlAttributes: new { @class = "form-control", @id = "MovieId" })
+            </div>
+            <span id="rec" style="color:darkred"></span>
+        </div>
+
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.LoanDate, "Loan Date", htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.EditorFor(model => model.LoanDate, new { htmlAttributes = new { @class = "form-control", @style = "width:300px", @type = "date" } })
+            </div>
+        </div>
+
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.ReturnDate, "Return Date", htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.EditorFor(model => model.ReturnDate, new { htmlAttributes = new { @class = "form-control", @style = "width:300px", @type = "date" } })
+            </div>
+        </div>
+        <div>
+            <input type="submit" value="Add" class="btn btn-success" style="width:100%;margin-top:10px" />
+        </div>
+    </section>
+}
+
+<script>
+    function getRecommendedMovie() {
+        var customers = document.getElementById('CustomerId');
+        var custId = customers.options[customers.selectedIndex].text;
+        $.ajax({
+            url: 'getRecommendedMovie/?CustomerId=' + custId,
+            success: function (data) {
+                if (data !== "There is no recommended movie for this customer.") {
+                    var movies = document.getElementById('MovieId');
+                    for (var i = 0; i < movies.options.length; i++) {
+                        if (movies.options[i].text === data) {
+                            movies.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    document.getElementById("rec").innerHTML = "The recommended movie is already chosen."
+                } else {
+                    document.getElementById("rec").innerHTML = "No recommendations for this cutomer."
+                }
+            }
+        });
+    } ();
+
+</script>

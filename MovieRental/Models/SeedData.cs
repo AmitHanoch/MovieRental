@@ -119,6 +119,40 @@ namespace MovieRental.Models
                     );
                 }
 
+                // Look for any customers.
+                if (!context.Customer.Any())
+                {
+                    context.Customer.AddRange(
+                        new Customer
+                        {
+                            //CustomerId = 1,
+                            PersonalId = "222223445",
+                            FirstName = "mama",
+                            FamilyName = "Reala",
+                            Gender = "female",
+                            PhoneNumber = "0509932132",
+                            Address = "La La Land",
+                            Birthday = new DateTime(),
+                            Email = "lola@gmail.com",
+
+                        },
+                        new Customer
+                        {
+                            //CustomerId = 2,
+                            PersonalId = "222223446",
+                            FirstName = "papa",
+                            FamilyName = "Reala",
+                            Gender = "male",
+                            PhoneNumber = "0509932133",
+                            Address = "La La Land",
+                            Birthday = new DateTime(),
+                            Email = "lola2@gmail.com",
+                        }
+                    );
+                }
+
+                context.SaveChanges();
+
                 // Look for any movies.
                 if (!context.Movie.Any())
                 {
@@ -144,8 +178,10 @@ namespace MovieRental.Models
                     );
                 }
 
+                context.SaveChanges();
+
                 // Look for any loans.
-                if (context.Loan.Any())
+                if (!context.Loan.Any())
                 {
                     context.Loan.AddRange(
                         new Loan
@@ -161,38 +197,6 @@ namespace MovieRental.Models
                             MovieId = 2,
                             LoanDate = new DateTime(),
                             ReturnDate = new DateTime(),
-                        }
-                    );
-                }
-
-                // Look for any customers.
-                if (!context.Customer.Any())
-                {
-                    context.Customer.AddRange(
-                        new Customer
-                        {
-                            //CustomerId = 1,
-                            PersonalId = "222223445",
-                            FirstName = "mama",
-                            FamilyName = "Reala",
-                            Gender = "female",
-                            PhoneNumber = "0509932132",
-                            Address = "La La Land",
-                            Birthday = new DateTime(),
-                            Email = "lola@gmail.com",
-                            
-                        },
-                        new Customer
-                        {
-                            //CustomerId = 2,
-                            PersonalId = "222223446",
-                            FirstName = "papa",
-                            FamilyName = "Reala",
-                            Gender = "male",
-                            PhoneNumber = "0509932133",
-                            Address = "La La Land",
-                            Birthday = new DateTime(),
-                            Email = "lola2@gmail.com",
                         }
                     );
                 }
