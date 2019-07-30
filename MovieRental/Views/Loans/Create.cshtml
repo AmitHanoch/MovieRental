@@ -24,7 +24,7 @@
     <h4>Loan book</h4>
     <hr />
 
-    <div class="form-horizontal">
+    <section class="form-horizontal">
 
         <div style="margin-bottom:10px">
             @Html.LabelFor(model => model.Customer.PersonalID, htmlAttributes: new { @style = "margin-bottom:5px" })
@@ -57,7 +57,7 @@
         <div>
             <input type="submit" value="Add" class="btn btn-success" style="width:100%;margin-top:10px" />
         </div>
-    </div>
+    </section>
 }
 
 <script>
@@ -75,9 +75,9 @@
                             break;
                         }
                     }
-                    document.getElementById("rec").innerHTML = "The recommended movie is already chosen"
+                    document.getElementById("rec").innerHTML = "The recommended movie is already chosen."
                 } else {
-                    document.getElementById("rec").innerHTML = "No recommendations for this cutomer"
+                    document.getElementById("rec").innerHTML = "No recommendations for this cutomer."
                 }
             }
         });

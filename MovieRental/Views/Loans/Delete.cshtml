@@ -14,57 +14,56 @@
     ViewBag.Title = "Delete";
 }
 
-<div>
-    <div>
-        @Html.ActionLink(" Back", "Index", "", new { @class = "glyphicon glyphicon-chevron-left Icon" })
-    </div>
-    <h4>Delete Loan</h4>
-    <hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Movie.Name)
-            </dt>
+        <div>
+            @Html.ActionLink(" Back", "Index", "", new { @class = "glyphicon glyphicon-chevron-left Icon" })
+        </div>
+        <h4>Delete Loan</h4>
+        <hr />
 
-            <dd>
-                @Html.DisplayFor(model => model.Movie.Name)
-            </dd>
+        <section class="form-horizontal">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Movie.Name)
+                </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Customer.PersonalID)
-            </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Movie.Name)
+                </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.Customer.PersonalID)
-            </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Customer.PersonalID)
+                </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.LoanDate)
-            </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Customer.PersonalID)
+                </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.LoanDate)
-            </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.LoanDate)
+                </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.ReturnDate)
-            </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.LoanDate)
+                </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.ReturnDate)
-            </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ReturnDate)
+                </dt>
 
-        </dl>
+                <dd>
+                    @Html.DisplayFor(model => model.ReturnDate)
+                </dd>
 
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
+            </dl>
+
+
 
             <div>
                 <input type="submit" value="Delete" class="btn btn-danger" style="width:100%;margin-top:20px" />
             </div>
-        }
-    </div>
-
-</div>
+    </section>
+}
