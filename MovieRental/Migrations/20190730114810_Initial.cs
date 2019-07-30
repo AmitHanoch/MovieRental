@@ -92,7 +92,8 @@ namespace MovieRental.Migrations
                     ReleaseDate = table.Column<DateTime>(nullable: false),
                     ProducerId = table.Column<int>(nullable: false),
                     GenreId = table.Column<int>(nullable: false),
-                    Price = table.Column<decimal>(nullable: false)
+                    Price = table.Column<decimal>(nullable: false),
+                    TrailerLink = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
