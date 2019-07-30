@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,69 +17,70 @@ namespace MovieRental.Controllers
     {
         private readonly MovieRentalContext _context;
 
-        private List<Movie> _moviesFromDB = new List<Movie> {
-            new Movie
-            {
-                Id = 1,
-                Name = "The Green Mile",
-                ReleaseDate = new DateTime(2000, 2, 18),
-                ProducerId = 1,
-                GenreId = 3
-            },
-            new Movie
-            {
-                Id = 2,
-                Name = "The Green Mile",
-                ReleaseDate = new DateTime(2000, 2, 18),
-                ProducerId = 1,
-                GenreId = 3
-            },
-            new Movie
-            {
-                Id = 3,
-                Name = "The Green Mile",
-                ReleaseDate = new DateTime(2000, 2, 18),
-                ProducerId = 1,
-                GenreId = 3
-            },
-            new Movie
-            {
-                Id = 4,
-                Name = "The Green Mile",
-                ReleaseDate = new DateTime(2000, 2, 18),
-                ProducerId = 1,
-                GenreId = 3
-            },
-            new Movie
-            {
-                Id = 5,
-                Name = "The Green Mile",
-                ReleaseDate = new DateTime(2000, 2, 18),
-                ProducerId = 1,
-                GenreId = 3
-            }
-        };
-
         public MoviesController(MovieRentalContext context)
         {
             _context = context;
         }
 
         // GET: Movies
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View(_moviesFromDB);
+            return View(await _context.Movie.Include(movie => movie.Genre).Include(movie => movie.Producer).ToListAsync());
         }
-
         public ActionResult Login()
         {
             return View();
         }
 
-      // GET: Movie/Details/5
-        public ActionResult Details(int? id)
+        [HttpPost]
+        public async Task<IActionResult> Login(string userName, string password)
         {
-           return View(_moviesFromDB[0]);
+            User authUser = await _context.User.SingleOrDefaultAsync(user => user.Username == userName &&
+                                                     user.Password == password);
+
+            if (authUser != null)
+            {
+                HttpContext.Session.SetInt32("LoggedIn", authUser.RoleId);
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        // GET: Movie/Details/5
+        public async Task<ActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
+            Movie movieQueried = await _context.Movie.Where(movie => movie.Id == id)
+                .Include(movie => movie.Genre).Include(movie => movie.Producer)
+                .FirstOrDefaultAsync();
+
+            if (movieQueried == null)
+            {
+                return NotFound();
+            }
+
+            return View(movieQueried);
+        }
+
+        public async Task<List<Movie>> TopFiveLoanedMovies()
+        {
+            var join_loans_movies_query = from movie in _context.Movie
+                                          join loan in _context.Loan on movie.Id equals loan.MovieId
+                                          select new
+                                          {
+                                              movieName = movie.Name
+                                          };
+
+            var groupBy = join_loans_movies_query.GroupBy(res => res.movieName);
+
+            return new List<Movie>();
         }
 
         // GET: Movie/Create
@@ -86,127 +89,6 @@ namespace MovieRental.Controllers
             //ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name");
             return View();
         }
-
-        //// POST: Movie/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "Id,Name,Author,ReleaseDate,GenreId")] Book book)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Books.Add(book);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", book.GenreId);
-        //    return View(book);
-        //}
-
-        //// GET: Books/Edit/5
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Book book = db.Books.Find(id);
-        //    if (book == null)
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", book.GenreId);
-        //    return View(book);
-        //}
-
-        //// POST: Books/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "Id,Name,Author,ReleaseDate,GenreId")] Book book)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (db.Books.AsNoTracking().SingleOrDefault(x => x.Id == book.Id) != null)
-        //        {
-        //            db.Entry(book).State = EntityState.Modified;
-        //            db.SaveChanges();
-        //        }
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", book.GenreId);
-        //    return View(book);
-        //}
-
-        //// GET: Books/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Book book = db.Books.Where(x => x.Id == id).Include(x => x.Genre).FirstOrDefault();
-        //    if (book == null)
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(book);
-        //}
-
-        //// POST: Books/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    Book book = db.Books.Find(id);
-        //    db.Books.Remove(book);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-
-        //[HttpPost]
-        //public ActionResult Search(string Id, string BookName, string Author, string GenreId, DateTime? ReleaseDate)
-        //{
-        //    var genres = new SelectList(db.Genres, "Name", "Name");
-        //    List<SelectListItem> genresList = new List<SelectListItem>();
-        //    genresList.Add(new SelectListItem { Text = "", Value = "" });
-        //    foreach (var item in genres)
-        //    {
-        //        genresList.Add(item);
-        //    }
-        //    ViewBag.GenreId = genresList;
-        //    IEnumerable<Book> books = db.Books.Include(b => b.Genre);
-
-        //    if (Id != string.Empty)
-        //    {
-        //        books = books.Where(book => book.Id.ToString() == Id);
-        //    }
-
-        //    if (BookName != string.Empty)
-        //    {
-        //        books = books.Where(book => book.Name.Contains(BookName));
-        //    }
-
-        //    if (Author != string.Empty)
-        //    {
-        //        books = books.Where(book => book.Author.Contains(Author));
-        //    }
-
-        //    if (GenreId != string.Empty)
-        //    {
-        //        books = books.Where(book => book.Genre.Name == GenreId);
-        //    }
-
-        //    if (ReleaseDate.HasValue)
-        //    {
-        //        books = books.Where(book => book.ReleaseDate.Equals(ReleaseDate));
-        //    }
-
-        //    return View("Index", books);
-        //}
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

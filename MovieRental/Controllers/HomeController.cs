@@ -1,13 +1,21 @@
 ﻿
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MovieRental.Models;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace MovieRental.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly MovieRentalContext _context;
+
+        public HomeController(MovieRentalContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<IActionResult> Index()
         {
             return View();
         }

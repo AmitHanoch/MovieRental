@@ -160,7 +160,7 @@ namespace MovieRental.Models
                         new Movie
                         {
                             Name = "Harry Poter",
-                            ReleaseDate = new DateTime(11111111110),
+                            ReleaseDate = new DateTime(),
                             GenreId = 1,
                             ProducerId = 2,
                             Price = 3.90m,
@@ -169,7 +169,7 @@ namespace MovieRental.Models
                         new Movie
                         {
                             Name = "Shrek",
-                            ReleaseDate = new DateTime(22222222),
+                            ReleaseDate = new DateTime(),
                             GenreId = 3,
                             ProducerId = 1,
                             Price = 3.90m,
