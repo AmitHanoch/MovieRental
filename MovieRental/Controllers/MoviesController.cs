@@ -25,7 +25,7 @@ namespace MovieRental.Controllers
         // GET: Movies
         public async Task<ActionResult> Index()
         {
-            return View(await _context.Movie.Include(movie => movie.Genre).Include(movie => movie.Producer).ToListAsync());
+            return View(await _context.Movie.Include(movie => movie.Genre).ToListAsync());
         }
         public ActionResult Login()
         {
@@ -58,7 +58,7 @@ namespace MovieRental.Controllers
             }
 
             Movie movieQueried = await _context.Movie.Where(movie => movie.Id == id)
-                .Include(movie => movie.Genre).Include(movie => movie.Producer)
+                .Include(movie => movie.Genre)
                 .FirstOrDefaultAsync();
 
             if (movieQueried == null)

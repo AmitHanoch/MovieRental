@@ -9,8 +9,6 @@ namespace MovieRental.Models
 
         public DbSet<MovieRental.Models.Movie> Movie { get; set; }
 
-        public DbSet<MovieRental.Models.Producer> Producer { get; set; }
-
         public DbSet<MovieRental.Models.Genre> Genre { get; set; }
         
         public DbSet<MovieRental.Models.Customer> Customer { get; set; }
