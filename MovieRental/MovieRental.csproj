@@ -11,6 +11,8 @@
     <Compile Remove="Migrations\20190729162641_Initial.Designer.cs" />
     <Compile Remove="Migrations\20190729164111_Initial.cs" />
     <Compile Remove="Migrations\20190729164111_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190729164456_Initial.cs" />
+    <Compile Remove="Migrations\20190729164456_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,5 +32,8 @@
   <ItemGroup>
     <None Include="wwwroot\css\Home.css" />
     <None Include="wwwroot\images\Popcorn.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>

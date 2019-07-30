@@ -31,5 +31,8 @@ namespace MovieRental.Models
 
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
+
+        [Required]
+        public string TrailerLink { get; set; }
     }
 }
