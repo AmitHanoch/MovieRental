@@ -1,41 +1,63 @@
-﻿@model IEnumerable<MovieRental.Models.Loan>
+﻿@using Microsoft.AspNetCore.Http;
+@model IEnumerable<MovieRental.Models.Loan>
 
 @{
-    ViewData["Title"] = "Index";
+    int? loggedInUserRoleId = Context.Session.GetInt32("LoggedIn");
+    if (loggedInUserRoleId.HasValue
+        && (loggedInUserRoleId != (int)MovieRental.General.Roles.MANAGER || loggedInUserRoleId != (int)MovieRental.General.Roles.STORE_OWNER))
+    {
+        Url.Action("Login", "LoansController");
+    }
 }
 
-<h2>Index</h2>
+@{
+    ViewBag.Title = "Loans";
+}
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<table class="table table-striped table-hover">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ReturnDate)
+            <th class="center" style="font-weight:bold">
+                @Html.DisplayNameFor(model => model.Movie.Name)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customer)
+            <th class="center" style="font-weight:bold">
+                @Html.DisplayNameFor(model => model.Customer.PersonalID)
+            </th>
+            <th class="center" style="font-weight:bold">
+                @Html.DisplayNameFor(model => model.LoanDate)
+            </th>
+            <th class="center" style="font-weight:bold">
+                @Html.DisplayNameFor(model => model.ReturnDate)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
-            <td>
+            <td class="center">
+                @Html.DisplayFor(modelItem => item.Movie.Name)
+            </td>
+            <td class="center">
+                @Html.DisplayFor(modelItem => item.Customer.PersonalID)
+            </td>
+            <td class="center">
+                @Html.DisplayFor(modelItem => item.LoanDate)
+            </td>
+            <td class="center">
                 @Html.DisplayFor(modelItem => item.ReturnDate)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.Address)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+
+            <td class="center">
+                @Html.ActionLink(" ", "Edit", new { BookId = item.MovieId, CustomerId = item.CustomerId }, new { @class = "glyphicon glyphicon-pencil Icon" })
+                @Html.ActionLink(" ", "Delete", new { BookId = item.MovieId, CustomerId = item.CustomerId }, new { @class = "glyphicon glyphicon-trash Icon" })
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>
+
+<span style="font-size:20px">
+    @Html.ActionLink(" ", "Create", "", new { @class = "glyphicon glyphicon-plus Icon" })
+</span>
