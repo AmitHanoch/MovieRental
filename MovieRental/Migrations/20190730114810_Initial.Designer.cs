@@ -10,7 +10,7 @@ using MovieRental.Models;
 namespace MovieRental.Migrations
 {
     [DbContext(typeof(MovieRentalContext))]
-    [Migration("20190727095445_Initial")]
+    [Migration("20190730114810_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,7 +23,7 @@ namespace MovieRental.Migrations
 
             modelBuilder.Entity("MovieRental.Models.Branch", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("BranchId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -34,14 +34,14 @@ namespace MovieRental.Migrations
 
                     b.Property<double>("LocationY");
 
-                    b.HasKey("Id");
+                    b.HasKey("BranchId");
 
                     b.ToTable("Branch");
                 });
 
             modelBuilder.Entity("MovieRental.Models.Customer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CustomerId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -62,27 +62,27 @@ namespace MovieRental.Migrations
                     b.Property<string>("Gender")
                         .IsRequired();
 
-                    b.Property<string>("PersonalID")
+                    b.Property<string>("PersonalId")
                         .IsRequired();
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired();
 
-                    b.HasKey("Id");
+                    b.HasKey("CustomerId");
 
                     b.ToTable("Customer");
                 });
 
             modelBuilder.Entity("MovieRental.Models.Genre", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("GenreId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.HasKey("Id");
+                    b.HasKey("GenreId");
 
                     b.ToTable("Genre");
                 });
@@ -115,9 +115,14 @@ namespace MovieRental.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
+                    b.Property<decimal>("Price");
+
                     b.Property<int>("ProducerId");
 
                     b.Property<DateTime>("ReleaseDate");
+
+                    b.Property<string>("TrailerLink")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -130,14 +135,14 @@ namespace MovieRental.Migrations
 
             modelBuilder.Entity("MovieRental.Models.Producer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProducerId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.HasKey("Id");
+                    b.HasKey("ProducerId");
 
                     b.ToTable("Producer");
                 });

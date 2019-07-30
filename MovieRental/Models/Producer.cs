@@ -5,7 +5,7 @@ namespace MovieRental.Models
     public class Producer
     {
         [Key]
-        public int Id { get; set; }
+        public int ProducerId { get; set; }
 
         [Required]
         public string Name { get; set; }

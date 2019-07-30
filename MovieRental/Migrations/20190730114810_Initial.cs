@@ -12,7 +12,7 @@ namespace MovieRental.Migrations
                 name: "Branch",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    BranchId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Address = table.Column<string>(nullable: false),
                     LocationX = table.Column<double>(nullable: false),
@@ -20,16 +20,16 @@ namespace MovieRental.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Branch", x => x.Id);
+                    table.PrimaryKey("PK_Branch", x => x.BranchId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Customer",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    CustomerId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    PersonalID = table.Column<string>(nullable: false),
+                    PersonalId = table.Column<string>(nullable: false),
                     FirstName = table.Column<string>(nullable: false),
                     FamilyName = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
@@ -40,33 +40,33 @@ namespace MovieRental.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customer", x => x.Id);
+                    table.PrimaryKey("PK_Customer", x => x.CustomerId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Genre",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    GenreId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Genre", x => x.Id);
+                    table.PrimaryKey("PK_Genre", x => x.GenreId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Producer",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    ProducerId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Producer", x => x.Id);
+                    table.PrimaryKey("PK_Producer", x => x.ProducerId);
                 });
 
             migrationBuilder.CreateTable(
@@ -91,7 +91,9 @@ namespace MovieRental.Migrations
                     Name = table.Column<string>(nullable: false),
                     ReleaseDate = table.Column<DateTime>(nullable: false),
                     ProducerId = table.Column<int>(nullable: false),
-                    GenreId = table.Column<int>(nullable: false)
+                    GenreId = table.Column<int>(nullable: false),
+                    Price = table.Column<decimal>(nullable: false),
+                    TrailerLink = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -100,13 +102,13 @@ namespace MovieRental.Migrations
                         name: "FK_Movie_Genre_GenreId",
                         column: x => x.GenreId,
                         principalTable: "Genre",
-                        principalColumn: "Id",
+                        principalColumn: "GenreId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Movie_Producer_ProducerId",
                         column: x => x.ProducerId,
                         principalTable: "Producer",
-                        principalColumn: "Id",
+                        principalColumn: "ProducerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -127,7 +129,7 @@ namespace MovieRental.Migrations
                         name: "FK_Loan_Customer_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customer",
-                        principalColumn: "Id",
+                        principalColumn: "CustomerId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Loan_Movie_MovieId",

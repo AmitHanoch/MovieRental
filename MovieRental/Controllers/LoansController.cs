@@ -42,7 +42,7 @@ namespace MovieRental.Controllers
             List<int[]> tempDatasset = new List<int[]>();
             foreach (var customer in customers)
             {
-                var moviesIdsPerCustomer = loans.Where(l => l.CustomerId == customer.Id)
+                var moviesIdsPerCustomer = loans.Where(l => l.CustomerId == customer.CustomerId)
                     .Select(m => m.MovieId).ToList();
 
                 tempDatasset.Add(moviesIdsPerCustomer.ToArray());
@@ -54,7 +54,7 @@ namespace MovieRental.Controllers
             AssociationRuleMatcher<int> classifier = apriori.Learn(dataset);
 
             var moviesPerSpecifiedCustomer = loans
-                .Where(l => l.Customer.PersonalID == (string)customerId)
+                .Where(l => l.Customer.PersonalId == (string)customerId)
                 .Select(b => b.MovieId).ToArray();
 
             int[][] matches = classifier.Decide(moviesPerSpecifiedCustomer);
