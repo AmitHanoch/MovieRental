@@ -120,7 +120,7 @@ namespace MovieRental.Models
                 }
 
                 // Look for any users.
-                if (context.Movie.Any())
+                if (!context.Movie.Any())
                 {
                     context.Movie.AddRange(
                         new Movie
