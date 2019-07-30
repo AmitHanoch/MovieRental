@@ -119,8 +119,8 @@ namespace MovieRental.Models
                     );
                 }
 
-                // Look for any users.
-                if (context.Movie.Any())
+                // Look for any movies.
+                if (!context.Movie.Any())
                 {
                     context.Movie.AddRange(
                         new Movie
@@ -130,6 +130,7 @@ namespace MovieRental.Models
                             GenreId = 1,
                             ProducerId = 2,
                             Price = 3.90m,
+                            TrailerLink = "https://www.youtube.com/watch?v=eKSB0gXl9dw",
                         },
                         new Movie
                         {
@@ -138,6 +139,60 @@ namespace MovieRental.Models
                             GenreId = 3,
                             ProducerId = 1,
                             Price = 3.90m,
+                            TrailerLink = "https://www.youtube.com/watch?v=W37DlG1i61s",
+                        }
+                    );
+                }
+
+                // Look for any loans.
+                if (context.Loan.Any())
+                {
+                    context.Loan.AddRange(
+                        new Loan
+                        {
+                            CustomerId = 1,
+                            MovieId = 1,
+                            LoanDate = new DateTime(),
+                            ReturnDate = new DateTime(),
+                        },
+                        new Loan
+                        {
+                            CustomerId = 2,
+                            MovieId = 2,
+                            LoanDate = new DateTime(),
+                            ReturnDate = new DateTime(),
+                        }
+                    );
+                }
+
+                // Look for any customers.
+                if (!context.Customer.Any())
+                {
+                    context.Customer.AddRange(
+                        new Customer
+                        {
+                            //CustomerId = 1,
+                            PersonalId = "222223445",
+                            FirstName = "mama",
+                            FamilyName = "Reala",
+                            Gender = "female",
+                            PhoneNumber = "0509932132",
+                            Address = "La La Land",
+                            Birthday = new DateTime(),
+                            Email = "lola@gmail.com",
+                            
+                        },
+                        new Customer
+                        {
+                            //CustomerId = 2,
+                            PersonalId = "222223446",
+                            FirstName = "papa",
+                            FamilyName = "Reala",
+                            Gender = "male",
+                            PhoneNumber = "0509932133",
+                            Address = "La La Land",
+                            Birthday = new DateTime(),
+                            Email = "lola2@gmail.com",
                         }
                     );
                 }

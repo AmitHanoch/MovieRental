@@ -119,6 +119,9 @@ namespace MovieRental.Migrations
 
                     b.Property<DateTime>("ReleaseDate");
 
+                    b.Property<string>("TrailerLink")
+                        .IsRequired();
+
                     b.HasKey("Id");
 
                     b.HasIndex("GenreId");
