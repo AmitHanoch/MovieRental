@@ -104,7 +104,7 @@ namespace MovieRental.Migrations
 
             modelBuilder.Entity("MovieRental.Models.Movie", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("MovieId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -122,7 +122,7 @@ namespace MovieRental.Migrations
                     b.Property<string>("TrailerLink")
                         .IsRequired();
 
-                    b.HasKey("Id");
+                    b.HasKey("MovieId");
 
                     b.HasIndex("GenreId");
 

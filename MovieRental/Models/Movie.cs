@@ -8,7 +8,7 @@ namespace MovieRental.Models
     public class Movie
     {
         [Key]
-        public int Id { get; set; }
+        public int MovieId { get; set; }
 
         [Required]
         public string Name { get; set; }

@@ -18,7 +18,7 @@ namespace MovieRental.Controllers
         private List<Movie> _moviesFromDB = new List<Movie> {
             new Movie
             {
-                Id = 1,
+                MovieId = 1,
                 Name = "The Green Mile",
                 ReleaseDate = new DateTime(2000, 2, 18),
                 ProducerId = 1,
@@ -26,7 +26,7 @@ namespace MovieRental.Controllers
             },
             new Movie
             {
-                Id = 2,
+                MovieId = 2,
                 Name = "The Green Mile",
                 ReleaseDate = new DateTime(2000, 2, 18),
                 ProducerId = 1,
@@ -34,7 +34,7 @@ namespace MovieRental.Controllers
             },
             new Movie
             {
-                Id = 3,
+                MovieId = 3,
                 Name = "The Green Mile",
                 ReleaseDate = new DateTime(2000, 2, 18),
                 ProducerId = 1,
@@ -42,7 +42,7 @@ namespace MovieRental.Controllers
             },
             new Movie
             {
-                Id = 4,
+                MovieId = 4,
                 Name = "The Green Mile",
                 ReleaseDate = new DateTime(2000, 2, 18),
                 ProducerId = 1,
@@ -50,7 +50,7 @@ namespace MovieRental.Controllers
             },
             new Movie
             {
-                Id = 5,
+                MovieId = 5,
                 Name = "The Green Mile",
                 ReleaseDate = new DateTime(2000, 2, 18),
                 ProducerId = 1,

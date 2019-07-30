@@ -10,7 +10,7 @@ using MovieRental.Models;
 namespace MovieRental.Migrations
 {
     [DbContext(typeof(MovieRentalContext))]
-    [Migration("20190730114810_Initial")]
+    [Migration("20190730125351_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,7 +106,7 @@ namespace MovieRental.Migrations
 
             modelBuilder.Entity("MovieRental.Models.Movie", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("MovieId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -124,7 +124,7 @@ namespace MovieRental.Migrations
                     b.Property<string>("TrailerLink")
                         .IsRequired();
 
-                    b.HasKey("Id");
+                    b.HasKey("MovieId");
 
                     b.HasIndex("GenreId");
 

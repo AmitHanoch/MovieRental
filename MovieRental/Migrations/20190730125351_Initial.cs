@@ -86,7 +86,7 @@ namespace MovieRental.Migrations
                 name: "Movie",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    MovieId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false),
                     ReleaseDate = table.Column<DateTime>(nullable: false),
@@ -97,7 +97,7 @@ namespace MovieRental.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Movie", x => x.Id);
+                    table.PrimaryKey("PK_Movie", x => x.MovieId);
                     table.ForeignKey(
                         name: "FK_Movie_Genre_GenreId",
                         column: x => x.GenreId,
@@ -135,7 +135,7 @@ namespace MovieRental.Migrations
                         name: "FK_Loan_Movie_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movie",
-                        principalColumn: "Id",
+                        principalColumn: "MovieId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
