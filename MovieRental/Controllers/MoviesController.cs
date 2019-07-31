@@ -69,20 +69,6 @@ namespace MovieRental.Controllers
             return View(movieQueried);
         }
 
-        public async Task<List<Movie>> TopFiveLoanedMovies()
-        {
-            var join_loans_movies_query = from movie in _context.Movie
-                                          join loan in _context.Loan on movie.MovieId equals loan.MovieId
-                                          select new
-                                          {
-                                              movieName = movie.Name
-                                          };
-
-            var groupBy = join_loans_movies_query.GroupBy(res => res.movieName);
-
-            return new List<Movie>();
-        }
-
         // GET: Movies/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
