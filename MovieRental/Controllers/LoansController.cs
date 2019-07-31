@@ -94,8 +94,8 @@ namespace MovieRental.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.MovieId = new SelectList(_context.Movie, "Id", "Name");
-            ViewBag.CustomerId = new SelectList(_context.Customer, "Id", "PersonalId");
+            ViewBag.MovieId = new SelectList(_context.Movie, "MovieId", "Name");
+            ViewBag.CustomerId = new SelectList(_context.Customer, "CustomerId", "PersonalId");
             return View();
         }
 
