@@ -1,62 +1,30 @@
-﻿@model MovieRental.Models.Movie
+@model MovieRental.Models.Movie
 
 @{
     ViewData["Title"] = "Movie Details";
 }
 
-<section class="fade-in-animation">
-    <div class="card movie-card">
-        <div class="card-title">
-            <h3>@Model.Name</h3>
-        </div>
-        <div class="card-content">
-            <section class="detials-columns-container">
-                <div class="detials-title-column">
-                    <span class="column-text">@Html.DisplayNameFor(model => model.ReleaseDate): </span>
-                    <span class="column-text">@Html.DisplayNameFor(model => model.GenreId): </span>
-                    <span class="column-text">@Html.DisplayNameFor(model => model.ProducerId): </span>
-                </div>
+    <section class="fade-in-animation">
+        <div class="card movie-card">
+            <div class="card-title">
+                <h3>@Model.Name</h3>
+            </div>
+            <div class="card-content">
+                <section id="detials-columns-container" class="row">
+                    <div id="detials-title-column">
+                        <span class="column-text">@Html.DisplayNameFor(model => model.ReleaseDate): </span>
+                        <span class="column-text">@Html.DisplayNameFor(model => model.Genre): </span>
+                        <span class="column-text">@Html.DisplayNameFor(model => model.Producer): </span>
+                        <span class="column-text">@Html.DisplayNameFor(model => model.Price): </span>
+                    </div>
 
-                <div class="detials-values-column">
-                    <span class="column-text">@Html.DisplayFor(model => model.ReleaseDate) </span>
-                    <span class="column-text">@Html.DisplayFor(model => model.GenreId) </span>
-                    <span class="column-text">@Html.DisplayFor(model => model.ProducerId) </span>
-                </div>
-            </section>
+                    <div id="detials-values-column">
+                        <span class="column-text">@Html.DisplayFor(model => model.ReleaseDate) </span>
+                        <span class="column-text">@Html.DisplayFor(model => model.Genre.Name) </span>
+                        <span class="column-text">@Html.DisplayFor(model => model.Producer) </span>
+                        <span class="column-text">@Html.DisplayFor(model => model.Price) </span>
+                    </div>
+                </section>
+            </div>
         </div>
-    </div>
-</section>
-    @*<div>
-            <h4>Movie</h4>
-            <hr />
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.Name)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.Name)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.ReleaseDate)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.ReleaseDate)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.Producer)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.Producer.Name)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.Genre)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.Genre.Name)
-                </dd>
-            </dl>
-        </div>
-        <div>
-            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-            <a asp-action="Index">Back to List</a>
-        </div>*@
+    </section>

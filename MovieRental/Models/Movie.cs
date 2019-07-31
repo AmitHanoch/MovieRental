@@ -18,10 +18,7 @@ namespace MovieRental.Models
         public DateTime ReleaseDate { get; set; }
 
         [Required]
-        public int ProducerId { get; set; }
-
-        [ForeignKey("ProducerId")]
-        public Producer Producer { get; set; }
+        public string Producer { get; set; }
 
         [Required]
         public int GenreId { get; set; }
@@ -31,8 +28,5 @@ namespace MovieRental.Models
 
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
-
-        [Required]
-        public string TrailerLink { get; set; }
     }
 }
