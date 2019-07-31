@@ -227,15 +227,15 @@ namespace MovieRental.Models
                         {
                             CustomerId = 1,
                             MovieId = 1,
-                            LoanDate = new DateTime(),
-                            ReturnDate = new DateTime(),
+                            LoanDate = new DateTime(2010, 4, 2),
+                            ReturnDate = new DateTime(2010, 5, 1),
                         },
                         new Loan
                         {
                             CustomerId = 2,
                             MovieId = 2,
-                            LoanDate = new DateTime(),
-                            ReturnDate = new DateTime(),
+                            LoanDate = new DateTime(2010, 3, 2),
+                            ReturnDate = new DateTime(2010, 4, 1),
                         }
                     );
                 }
