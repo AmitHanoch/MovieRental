@@ -1,0 +1,69 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model MovieRental.Models.Loan
+
+@{
+    int? loggedInUserRoleId = Context.Session.GetInt32("LoggedIn");
+    if (!loggedInUserRoleId.HasValue
+        || (loggedInUserRoleId != (int)MovieRental.General.Roles.MANAGER && loggedInUserRoleId != (int)MovieRental.General.Roles.STORE_OWNER))
+    {
+        Context.Response.Redirect("/Loans/Login");
+    }
+}
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+        <div>
+            @Html.ActionLink(" Back", "Index", "", new { @class = "glyphicon glyphicon-chevron-left Icon" })
+        </div>
+        <h4>Delete Loan</h4>
+        <hr />
+
+        <section class="form-horizontal">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Movie.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Movie.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Customer.PersonalId)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Customer.PersonalId)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.LoanDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.LoanDate)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ReturnDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ReturnDate)
+                </dd>
+
+            </dl>
+
+
+
+            <div>
+                <input type="submit" value="Delete" class="btn btn-danger" style="width:100%;margin-top:20px" />
+            </div>
+    </section>
+}

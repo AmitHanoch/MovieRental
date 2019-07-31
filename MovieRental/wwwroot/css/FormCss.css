@@ -1,0 +1,24 @@
+﻿.form-horizontal {
+    justify-content: center;
+    display: grid;
+}
+
+.dl-horizontal {
+    font-size:15px;
+}
+
+    .dl-horizontal dt {
+        margin-top: 10px;
+        text-align: left;
+    }
+
+    .dl-horizontal dd {
+        margin-top: 10px;
+        text-align: right;
+    }
+
+h4 {
+    font-size: 24pt;
+    font-weight: bold;
+    text-align:center;
+}

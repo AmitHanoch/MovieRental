@@ -1,0 +1,56 @@
+﻿@model IEnumerable<MovieRental.Models.Branch>
+
+@{
+    ViewBag.Title = "Branches";
+}
+
+<h4 style="margin-bottom:10px">Movie rental branches</h4>
+<section id="map" style="position:absolute;width:750px;height:500px;left:25%"></section>
+
+<script type='text/javascript'>
+    function initMap() {
+        const map = new Microsoft.Maps.Map('#map', {});
+
+        $.get("/Branches/GetBranches", function (data) {
+            const imageUrl = 'images/PopcornPin.png';
+            const branches = JSON.parse(data);
+
+            for (var i = 0; i < branches.length; i++) {
+                const branch = branches[i];
+                const center = { latitude: branch.LocationX, longitude: branch.LocationY }
+                const branchTitle = branch.Address + " Branch";
+
+                createScaledPushpin(center, branchTitle, imageUrl, 0.15, function (pin) {
+                    map.entities.push(pin);
+                });
+            }
+        });
+    }
+
+    function createScaledPushpin(location, title, imgUrl, scale, callback) {
+        var img = new Image();
+        img.onload = function () {
+            var c = document.createElement('canvas');
+            c.width = img.width * scale;
+            c.height = img.height * scale;
+
+            var context = c.getContext('2d');
+
+            //Draw scaled image
+            context.drawImage(img, 0, 0, c.width, c.height);
+
+            var pin = new Microsoft.Maps.Pushpin(location, {
+                title: title,
+                //Generate a base64 image URL from the canvas.
+                icon: c.toDataURL(),
+            });
+
+            if (callback) {
+                callback(pin);
+            }
+        };
+
+        img.src = imgUrl;
+    }
+</script>
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=initMap&key=AtZY06FRanrtJxDGTeSGzu9caUxK_71IL6tLRm73FZOz8X5nTXkNoKOngnpl--xs' async defer></script>

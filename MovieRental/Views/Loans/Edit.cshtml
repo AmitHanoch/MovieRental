@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model MovieRental.Models.Loan
+
+@{
+    int? loggedInUserRoleId = Context.Session.GetInt32("LoggedIn");
+    if (!loggedInUserRoleId.HasValue
+        || (loggedInUserRoleId != (int)MovieRental.General.Roles.MANAGER && loggedInUserRoleId != (int)MovieRental.General.Roles.STORE_OWNER))
+    {
+        Context.Response.Redirect("/Loans/Login");
+    }
+}
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        @Html.ActionLink(" Back", "Index", "", new { @class = "glyphicon glyphicon-chevron-left Icon" })
+    </div>
+    <h4>Edit Loan</h4>
+    <hr />
+
+
+    <section class="form-horizontal">
+        @Html.HiddenFor(model => model.MovieId)
+        @Html.HiddenFor(model => model.CustomerId)
+
+
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.LoanDate, "Loan Date", htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.EditorFor(model => model.LoanDate, new { htmlAttributes = new { @class = "form-control", @style = "width:300px", @type = "date" } })
+            </div>
+        </div>
+
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.ReturnDate, "Return Date", htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.EditorFor(model => model.ReturnDate, new { htmlAttributes = new { @class = "form-control", @style = "width:300px", @type = "date" } })
+            </div>
+        </div>
+
+        <div>
+            <input type="submit" value="Edit" class="btn btn-success" style="width:100%;margin-top:10px" />
+        </div>
+    </section>
+}
+
