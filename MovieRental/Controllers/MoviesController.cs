@@ -57,7 +57,7 @@ namespace MovieRental.Controllers
                 return BadRequest();
             }
 
-            Movie movieQueried = await _context.Movie.Where(movie => movie.Id == id)
+            Movie movieQueried = await _context.Movie.Where(movie => movie.MovieId == id)
                 .Include(movie => movie.Genre)
                 .FirstOrDefaultAsync();
 
@@ -72,7 +72,7 @@ namespace MovieRental.Controllers
         public async Task<List<Movie>> TopFiveLoanedMovies()
         {
             var join_loans_movies_query = from movie in _context.Movie
-                                          join loan in _context.Loan on movie.Id equals loan.MovieId
+                                          join loan in _context.Loan on movie.MovieId equals loan.MovieId
                                           select new
                                           {
                                               movieName = movie.Name
