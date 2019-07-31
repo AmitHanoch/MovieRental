@@ -25,7 +25,7 @@ namespace MovieRental.Controllers
         // GET: Movies
         public async Task<ActionResult> Index()
         {
-            return View(await _context.Movie.Include(movie => movie.Genre).Include(movie => movie.Producer).ToListAsync());
+            return View(await _context.Movie.Include(movie => movie.Genre).ToListAsync());
         }
         public ActionResult Login()
         {
@@ -57,8 +57,8 @@ namespace MovieRental.Controllers
                 return BadRequest();
             }
 
-            Movie movieQueried = await _context.Movie.Where(movie => movie.Id == id)
-                .Include(movie => movie.Genre).Include(movie => movie.Producer)
+            Movie movieQueried = await _context.Movie.Where(movie => movie.MovieId == id)
+                .Include(movie => movie.Genre)
                 .FirstOrDefaultAsync();
 
             if (movieQueried == null)
@@ -72,7 +72,7 @@ namespace MovieRental.Controllers
         public async Task<List<Movie>> TopFiveLoanedMovies()
         {
             var join_loans_movies_query = from movie in _context.Movie
-                                          join loan in _context.Loan on movie.Id equals loan.MovieId
+                                          join loan in _context.Loan on movie.MovieId equals loan.MovieId
                                           select new
                                           {
                                               movieName = movie.Name
@@ -110,7 +110,7 @@ namespace MovieRental.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_context.Movie.AsNoTracking().SingleOrDefault(x => x.Id == movieToEdit.Id) != null)
+                if (_context.Movie.AsNoTracking().SingleOrDefault(x => x.MovieId == movieToEdit.MovieId) != null)
                 {
                     _context.Entry(movieToEdit).State = EntityState.Modified;
                     _context.SaveChanges();

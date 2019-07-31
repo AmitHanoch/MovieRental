@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -13,6 +13,16 @@
     <Compile Remove="Migrations\20190729164111_Initial.Designer.cs" />
     <Compile Remove="Migrations\20190729164456_Initial.cs" />
     <Compile Remove="Migrations\20190729164456_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190730111052_Initial.cs" />
+    <Compile Remove="Migrations\20190730111052_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190730114516_Initial.cs" />
+    <Compile Remove="Migrations\20190730114516_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190730114810_Initial.cs" />
+    <Compile Remove="Migrations\20190730114810_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190730122112_Initial.cs" />
+    <Compile Remove="Migrations\20190730122112_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190731155537_MovieRental.cs" />
+    <Compile Remove="Migrations\20190731155537_MovieRental.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,8 +42,5 @@
   <ItemGroup>
     <None Include="wwwroot\css\Home.css" />
     <None Include="wwwroot\images\Popcorn.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>

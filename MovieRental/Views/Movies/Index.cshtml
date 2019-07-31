@@ -32,7 +32,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr class="table-row" data-item-id="@item.Id">
+                <tr class="table-row" data-item-id="@item.MovieId">
                     <td class="table-cell">
                         <span> @Html.DisplayFor(modelItem => item.Name) </span>
                     </td>
@@ -40,7 +40,7 @@
                         <span> @Html.DisplayFor(modelItem => item.ReleaseDate) </span>
                     </td>
                     <td class="table-cell">
-                        <span> @Html.DisplayFor(modelItem => item.Producer.Name) </span>
+                        <span> @Html.DisplayFor(modelItem => item.Producer) </span>
                     </td>
                     <td class="table-cell">
                         <span> @Html.DisplayFor(modelItem => item.Genre.Name) </span>
@@ -49,8 +49,8 @@
                         <span> @Html.DisplayFor(modelItem => item.Price) </span>
                     </td>
                     <td class="table-cell">
-                        @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "glyphicon glyphicon-pencil Icon" })  
-                        @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "glyphicon glyphicon-trash Icon" })
+                        @Html.ActionLink(" ", "Edit", new { id = item.MovieId }, new { @class = "glyphicon glyphicon-pencil Icon" })  
+                        @Html.ActionLink(" ", "Delete", new { id = item.MovieId }, new { @class = "glyphicon glyphicon-trash Icon" })
                     </td>
                 </tr>
                 }

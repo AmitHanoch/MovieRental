@@ -9,26 +9,48 @@
 
 <script type='text/javascript'>
     function initMap() {
-        const iconUrl = "https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn4.iconfinder.com%2Fdata%2Ficons%2Fplanner-color%2F64%2Fpopcorn-movie-time-512.png&imgrefurl=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F3570605%2Fcinema_entertainment_movie_movies_popcorn_icon&docid=_2E7LHI9KGGfEM&tbnid=9YsEqKTFt2fjgM%3A&vet=10ahUKEwjR-Lr29s_jAhV5Q0EAHbyPBjMQMwhKKAkwCQ..i&w=512&h=512&bih=754&biw=1536&q=movie%20icon&ved=0ahUKEwjR-Lr29s_jAhV5Q0EAHbyPBjMQMwhKKAkwCQ&iact=mrc&uact=8";
         const map = new Microsoft.Maps.Map('#map', {});
 
         $.get("/Branches/GetBranches", function (data) {
+            const imageUrl = 'images/PopcornPin.png';
             const branches = JSON.parse(data);
 
-            const center = map.getCenter();
-
             for (var i = 0; i < branches.length; i++) {
-                //Create custom Pushpin
-                var pin = new Microsoft.Maps.Pushpin(center, {
-                    title: branches[i].Address + " Branch",
-                    anchor: new Microsoft.Maps.Point(branches[i].LocationX, branches[i].LocationY),
-                    icon: iconUrl
-                });
+                const branch = branches[i];
+                const center = { latitude: branch.LocationX, longitude: branch.LocationY }
+                const branchTitle = branch.Address + " Branch";
 
-                //Add the pushpin to the map
-                map.entities.push(pin);
+                createScaledPushpin(center, branchTitle, imageUrl, 0.15, function (pin) {
+                    map.entities.push(pin);
+                });
             }
         });
+    }
+
+    function createScaledPushpin(location, title, imgUrl, scale, callback) {
+        var img = new Image();
+        img.onload = function () {
+            var c = document.createElement('canvas');
+            c.width = img.width * scale;
+            c.height = img.height * scale;
+
+            var context = c.getContext('2d');
+
+            //Draw scaled image
+            context.drawImage(img, 0, 0, c.width, c.height);
+
+            var pin = new Microsoft.Maps.Pushpin(location, {
+                title: title,
+                //Generate a base64 image URL from the canvas.
+                icon: c.toDataURL(),
+            });
+
+            if (callback) {
+                callback(pin);
+            }
+        };
+
+        img.src = imgUrl;
     }
 </script>
 <script src='https://www.bing.com/api/maps/mapcontrol?callback=initMap&key=AtZY06FRanrtJxDGTeSGzu9caUxK_71IL6tLRm73FZOz8X5nTXkNoKOngnpl--xs' async defer></script>
