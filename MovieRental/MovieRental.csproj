@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -13,6 +13,14 @@
     <Compile Remove="Migrations\20190729164111_Initial.Designer.cs" />
     <Compile Remove="Migrations\20190729164456_Initial.cs" />
     <Compile Remove="Migrations\20190729164456_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190730111052_Initial.cs" />
+    <Compile Remove="Migrations\20190730111052_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190730114516_Initial.cs" />
+    <Compile Remove="Migrations\20190730114516_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190730114810_Initial.cs" />
+    <Compile Remove="Migrations\20190730114810_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190730122112_Initial.cs" />
+    <Compile Remove="Migrations\20190730122112_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,7 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Shared\_CookieConsentPartial.cshtml" />
     <Content Remove="wwwroot\css\Home.css" />
     <Content Remove="wwwroot\images\Popcorn.jpg" />
   </ItemGroup>

@@ -3,10 +3,10 @@
 
 @{
     int? loggedInUserRoleId = Context.Session.GetInt32("LoggedIn");
-    if (loggedInUserRoleId.HasValue
-        && (loggedInUserRoleId != (int)MovieRental.General.Roles.MANAGER || loggedInUserRoleId != (int)MovieRental.General.Roles.STORE_OWNER))
+    if (!loggedInUserRoleId.HasValue
+        || (loggedInUserRoleId != (int)MovieRental.General.Roles.MANAGER && loggedInUserRoleId != (int)MovieRental.General.Roles.STORE_OWNER))
     {
-        Url.Action("Login", "LoansController");
+        Context.Response.Redirect("/Loans/Login");
     }
 }
 
@@ -50,8 +50,8 @@
             </td>
 
             <td class="center">
-                @Html.ActionLink(" ", "Edit", new { BookId = item.MovieId, CustomerId = item.CustomerId }, new { @class = "glyphicon glyphicon-pencil Icon" })
-                @Html.ActionLink(" ", "Delete", new { BookId = item.MovieId, CustomerId = item.CustomerId }, new { @class = "glyphicon glyphicon-trash Icon" })
+                @Html.ActionLink(" ", "Edit", new { movieId = item.MovieId, customerId= item.CustomerId, loanDate = item.LoanDate }, new { @class = "glyphicon glyphicon-pencil Icon" })
+                @Html.ActionLink(" ", "Delete", new { movieId = item.MovieId, customerId = item.CustomerId, loanDate = item.LoanDate }, new { @class = "glyphicon glyphicon-trash Icon" })
             </td>
         </tr>
         }

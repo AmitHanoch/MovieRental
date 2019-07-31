@@ -24,7 +24,7 @@ namespace MovieRental.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var movieRentalContext = _context.Loan.Include(l => l.Customer);
+            var movieRentalContext = _context.Loan.Include(l => l.Customer).Include(l => l.Movie);
             return View(await movieRentalContext.ToListAsync());
         }
 
@@ -62,7 +62,7 @@ namespace MovieRental.Controllers
             if (matches.Length > 0)
             {
                 int bestMovieId = matches[0][0];
-                string bestMovieName = _context.Movie.Single(m => m.Id == bestMovieId).Name;
+                string bestMovieName = _context.Movie.Single(m => m.MovieId == bestMovieId).Name;
                 return bestMovieName;
             }
 
@@ -71,18 +71,21 @@ namespace MovieRental.Controllers
 
         // GET: Loans/Details/5
         [HttpGet]
-        public async Task<IActionResult> Details(int? MovieId, int? CustomerId)
+        public async Task<IActionResult> Details(int? movieId, int? customerId, DateTime? loanDate)
         {
-            if (MovieId == null || CustomerId == null)
+            if (movieId == null || customerId == null || loanDate == null)
             {
                 return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest);
             }
 
-            Loan loan = await _context.Loan.FindAsync(MovieId, CustomerId);
+            Loan loan = await _context.Loan.FindAsync(movieId, customerId, loanDate);
             if (loan == null)
             {
                 return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound);
             }
+
+            await _context.Entry(loan).Reference(l => l.Movie).LoadAsync();
+            await _context.Entry(loan).Reference(l => l.Customer).LoadAsync();
 
             return View(loan);
         }
@@ -123,14 +126,14 @@ namespace MovieRental.Controllers
 
         // GET: Loans/Edit/5
         [HttpGet]
-        public async Task<IActionResult> Edit(int? movieId, int? customerId)
+        public async Task<IActionResult> Edit(int? movieId, int? customerId, DateTime? loanDate)
         {
-            if (movieId == null || customerId == null)
+            if (movieId == null || customerId == null || loanDate == null)
             {
                 return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest);
             }
 
-            Loan loan = await _context.Loan.FindAsync(movieId, customerId);
+            Loan loan = await _context.Loan.FindAsync(movieId, customerId, loanDate);
             if (loan == null)
             {
                 return RedirectToAction(nameof(Index));
@@ -165,18 +168,21 @@ namespace MovieRental.Controllers
 
         // GET: Loans/Delete/5
         [HttpGet]
-        public async Task<IActionResult> Delete(int? movieId, int? customerId)
+        public async Task<IActionResult> Delete(int? movieId, int? customerId, DateTime? loanDate)
         {
-            if (movieId == null || customerId == null)
+            if (movieId == null || customerId == null || loanDate == null)
             {
                 return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound);
             }
 
-            Loan loan = await _context.Loan.FindAsync(movieId, customerId);
+            Loan loan = await _context.Loan.FindAsync(movieId, customerId, loanDate);
             if (loan == null)
             {
                 return RedirectToAction(nameof(Index));
             }
+
+            await _context.Entry(loan).Reference(l => l.Movie).LoadAsync();
+            await _context.Entry(loan).Reference(l => l.Customer).LoadAsync();
 
             return View(loan);
         }
@@ -184,9 +190,11 @@ namespace MovieRental.Controllers
         // POST: Loans/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int movieId, int customerId)
+        public async Task<IActionResult> DeleteConfirmed(int movieId, int customerId, DateTime? loanDate)
         {
-            Loan loan = await _context.Loan.FindAsync(movieId, customerId);
+            Loan loan = await _context.Loan.FindAsync(movieId, customerId, loanDate);
+            await _context.Entry(loan).Reference(l => l.Movie).LoadAsync();
+            await _context.Entry(loan).Reference(l => l.Customer).LoadAsync();
             _context.Loan.Remove(loan);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
