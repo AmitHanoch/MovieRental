@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieRental.Models;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -59,18 +60,51 @@ namespace MovieRental.Controllers
                 .Include(movie => movie.Genre)
                 .ToListAsync();
         }
-        private async Task<List<Movie>> TopFiveLoanedMovies()
+
+        public JsonResult GetMostPopularForList()
         {
-            var join_loans_movies_query = from movie in _context.Movie
-                                          join loan in _context.Loan on movie.MovieId equals loan.MovieId
-                                          select new
-                                          {
-                                              movieName = movie.Name
-                                          };
+            List<JObject> returnObject = new List<JObject>();
 
-            var groupBy = join_loans_movies_query.GroupBy(res => res.movieName);
+            //select top 5 m.Name, loans.NumberOfLoans from Movie m,
+            // (select l.MovieId, COUNT(l.MovieId) as NumberOfLoans from Loan l group by l.MovieId) loans
+            // where m.MovieId = loans.MovieId
+            // order by loans.NumberOfLoans DESC
+            var query = from m in _context.Movie
+                        select new
+                        {
+                            Name = m.Name,
+                            MovieId = m.MovieId,
+                            NumberOfLoans = (from loans in _context.Loan
+                                             group loans by loans.MovieId into sub
+                                             select new
+                                             {
+                                                 MovieId = sub.Key,
+                                                 NumberOfLoans = sub.Count()
+                                             })
+                        };
 
-            return new List<Movie>();
+            foreach (var item in query)
+            {
+                JObject obj = new JObject();
+                obj["Name"] = item.Name;
+
+                foreach (var loanCount in item.NumberOfLoans)
+                {
+                    if(loanCount.MovieId == item.MovieId)
+                    {
+                        obj["NumberOfLoans"] = loanCount.NumberOfLoans;
+                    }
+                }
+
+                returnObject.Add(obj);
+            }
+
+            returnObject = returnObject.Where(item => item["NumberOfLoans"] != null)
+                .OrderByDescending(item => item["NumberOfLoans"])
+                .Take(5).ToList();
+
+
+            return Json(returnObject);
         }
     }
 }

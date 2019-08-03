@@ -33,15 +33,28 @@
             </div>
             <div class="card-content">
                 <div class="list">
-                    <ol>
-                        <li><a href="#">Avatar</a></li>
-                        <li><a href="#">Avengers: Infinity War</a></li>
-                        <li><a href="#">Forest Gump</a></li>
-                        <li><a href="#">Resident Evil</a></li>
-                        <li><a href="#">Baby Driver</a></li>
+                    <ol id="mostPopularList">
+                       
                     </ol>
                 </div>
             </div>
         </div>
     </section>
 </section>
+
+<script>
+    (function () {
+        $.ajax({
+            url: "/Home/GetMostPopularForList",
+            success: function (result) {
+                var listItems = "";
+
+                $.each(result, function (index, value) {
+                    listItems = listItems + " " + "<li><a href='#'>" + value.Name + "</a></li>"
+                });
+
+                $("#mostPopularList").html(listItems);
+            }
+        });
+    })();
+</script>
