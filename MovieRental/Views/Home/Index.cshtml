@@ -50,7 +50,7 @@
                 var listItems = "";
 
                 $.each(result, function (index, value) {
-                    listItems = listItems + " " + "<li><a href='#'>" + value.Name + "</a></li>"
+                    listItems = listItems + " " + "<li><a href='/Movies/Details/" + value.MovieId + "'>" + value.Name + "</a></li>"
                 });
 
                 $("#mostPopularList").html(listItems);

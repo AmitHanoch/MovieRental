@@ -87,6 +87,7 @@ namespace MovieRental.Controllers
             {
                 JObject obj = new JObject();
                 obj["Name"] = item.Name;
+                obj["MovieId"] = item.MovieId;
 
                 foreach (var loanCount in item.NumberOfLoans)
                 {
