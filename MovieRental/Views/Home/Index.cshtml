@@ -4,7 +4,9 @@
 
 <section class="fade-in-animation">
     <section id="title-section" class="row">
-        <img src="~/images/Popcorn.jpg" id="backgroud-image-title" />
+        <video autoplay loop id="backgroud-image-title">
+            <source src="~/images/popcornVideo.mp4" type="video/mp4">
+        </video>
         <h1 id="title">Movie Rental</h1>
         <h3 id="slogen">Binge, Learn, Relax, Enjoy</h3>
     </section>
@@ -56,5 +58,16 @@
                 $("#mostPopularList").html(listItems);
             }
         });
+    })();
+
+    (function () {
+        var videoElement = $("#backgroud-image-title").get(0);
+
+        $(videoElement).on('ended', function () {
+            videoElement.currentTime = 0;
+            videoElement.play();
+        });
+
+         videoElement.play();
     })();
 </script>
