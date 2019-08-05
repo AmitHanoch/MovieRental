@@ -69,27 +69,6 @@ namespace MovieRental.Controllers
             return "There is no recommended movie for this customer.";
         }
 
-        // GET: Loans/Details/5
-        [HttpGet]
-        public async Task<IActionResult> Details(int? movieId, int? customerId, DateTime? loanDate)
-        {
-            if (movieId == null || customerId == null || loanDate == null)
-            {
-                return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest);
-            }
-
-            Loan loan = await _context.Loan.FindAsync(movieId, customerId, loanDate);
-            if (loan == null)
-            {
-                return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound);
-            }
-
-            await _context.Entry(loan).Reference(l => l.Movie).LoadAsync();
-            await _context.Entry(loan).Reference(l => l.Customer).LoadAsync();
-
-            return View(loan);
-        }
-
         // GET: Loans/Create
         [HttpGet]
         public IActionResult Create()

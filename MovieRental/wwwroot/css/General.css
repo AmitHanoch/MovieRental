@@ -33,3 +33,8 @@ p, h1, h2, h3, h4, h5, span {
     -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
     animation: fadein 2s;
 }
+
+#pageTitle {
+    font-size: 75px;
+    text-shadow: 4px -3px 6px rgba(20,9,5,0.53);
+}

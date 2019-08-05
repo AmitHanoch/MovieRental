@@ -18,12 +18,6 @@
 {
     @Html.AntiForgeryToken()
 
-        <div>
-            @Html.ActionLink(" Back", "Index", "", new { @class = "glyphicon glyphicon-chevron-left Icon" })
-        </div>
-        <h4>Delete Loan</h4>
-        <hr />
-
         <section class="form-horizontal">
             <dl class="dl-horizontal">
                 <dt>
@@ -59,8 +53,6 @@
                 </dd>
 
             </dl>
-
-
 
             <div>
                 <input type="submit" value="Delete" class="btn btn-danger" style="width:100%;margin-top:20px" />
