@@ -1,0 +1,99 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model MovieRental.Models.Customer
+
+@{
+    int? loggedInUserRoleId = Context.Session.GetInt32("LoggedIn");
+    if (!loggedInUserRoleId.HasValue
+        || (loggedInUserRoleId != (int)MovieRental.General.Roles.MANAGER && loggedInUserRoleId != (int)MovieRental.General.Roles.STORE_OWNER))
+    {
+        Context.Response.Redirect("/Customers/Login");
+    }
+}
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+        <div>
+            @Html.ActionLink(" Back", "Index", "", new { @class = "glyphicon glyphicon-chevron-left Icon" })
+        </div>
+        <h4>Delete Loan</h4>
+        <hr />
+
+        <section class="form-horizontal">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.PersonalId)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PersonalId)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FirstName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.FamilyName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FamilyName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PhoneNumber)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Address)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Address)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Gender)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Gender)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Birthday)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Birthday)
+                </dd>
+
+            </dl>
+            <div>
+                <input type="submit" value="Delete" class="btn btn-danger" style="width:100%;margin-top:20px" />
+            </div>
+        </section>
+    
+}

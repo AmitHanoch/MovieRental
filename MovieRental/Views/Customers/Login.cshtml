@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model MovieRental.Models.User
+
+@{
+    int? loggedInUserRoleId = Context.Session.GetInt32("LoggedIn");
+    if (loggedInUserRoleId.HasValue
+        && (loggedInUserRoleId == (int)MovieRental.General.Roles.MANAGER || loggedInUserRoleId == (int)MovieRental.General.Roles.STORE_OWNER))
+    {
+        Context.Response.Redirect("/Customers");
+    }
+}
+
+@{
+    ViewBag.Title = "Login";
+}
+
+@using (Html.BeginForm())
+{
+
+    <h4 class="center">Login</h4>
+    <hr />
+
+    <section class="form-horizontal">
+
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.Username, htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @style = "width:300px" } })
+            </div>
+        </div>
+
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @style = "width:300px", @type = "password" } })
+            </div>
+        </div>
+
+        <div>
+            <input type="submit" value="Login" class="btn btn-success" style="width:100%;margin-top:10px" />
+        </div>
+
+    </section>
+}
