@@ -38,3 +38,27 @@ p, h1, h2, h3, h4, h5, span {
     font-size: 75px;
     text-shadow: 4px -3px 6px rgba(20,9,5,0.53);
 }
+
+#delete-button {
+    width: 90%;
+    display: block;
+    margin: 0 auto;
+}
+
+#details-columns-container {
+    column-count: 2;
+    column-gap: 8px;
+    column-rule-style: solid;
+    column-rule: 1px solid transparent;
+    padding: 8px;
+}
+
+#details-title-column {
+    column-span: 1;
+    text-align: right;
+    font-weight: bold;
+}
+
+#details-values-column {
+    column-span: 1;
+}

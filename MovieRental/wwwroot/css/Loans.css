@@ -27,3 +27,7 @@
 .exit-loan-card .card-content {
     top: 10%;
 }
+
+#delete-loan-card {
+    height: 250px;
+}

@@ -13,24 +13,6 @@
     top: 25%;
 }
 
-#detials-columns-container {
-    column-count: 2;
-    column-gap: 8px;
-    column-rule-style: solid;
-    column-rule: 1px solid transparent;
-    padding: 8px;
-}
-
-#detials-title-column {
-    column-span: 1; 
-    text-align: right;
-    font-weight: bold;
-}
-
-#detials-values-column {
-    column-span: 1;
-}
-
 .edit-movie-card {
     width: 40%;
     margin: 0 auto;
