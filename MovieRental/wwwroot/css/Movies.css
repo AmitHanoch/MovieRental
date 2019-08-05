@@ -95,3 +95,18 @@
     display: block;
     line-height: 30px;
 }
+
+.edit-movie-card {
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 5%;
+    height: 450px;
+}
+
+.edit-movie-card .card-title {
+    height: 10%;
+}
+
+.exit-movie-card .card-content {
+    top: 10%;
+}
