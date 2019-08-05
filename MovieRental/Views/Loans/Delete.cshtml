@@ -1,4 +1,6 @@
-﻿@using Microsoft.AspNetCore.Http;
+﻿<link rel="stylesheet" href="~/css/Loans.css" />
+
+@using Microsoft.AspNetCore.Http;
 @model MovieRental.Models.Loan
 
 @{
@@ -18,44 +20,44 @@
 {
     @Html.AntiForgeryToken()
 
-        <section class="form-horizontal">
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.Movie.Name)
-                </dt>
+    <section class="form-horizontal">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Movie.Name)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Movie.Name)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Movie.Name)
+            </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Customer.PersonalId)
-                </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Customer.PersonalId)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Customer.PersonalId)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Customer.PersonalId)
+            </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.LoanDate)
-                </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.LoanDate)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.LoanDate)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.LoanDate)
+            </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.ReturnDate)
-                </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.ReturnDate)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.ReturnDate)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.ReturnDate)
+            </dd>
 
-            </dl>
+        </dl>
 
-            <div>
-                <input type="submit" value="Delete" class="btn btn-danger" style="width:100%;margin-top:20px" />
-            </div>
+        <div>
+            <input type="submit" value="Delete" class="btn btn-danger" style="width:100%;margin-top:20px" />
+        </div>
     </section>
 }
