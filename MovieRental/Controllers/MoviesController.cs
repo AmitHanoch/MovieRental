@@ -92,7 +92,7 @@ namespace MovieRental.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind("Id,Name,ReleaseDate,ProducerId,Price,GenreId")] Movie movieToEdit)
+        public async Task<IActionResult> Edit([Bind("MovieId,Name,ReleaseDate,Producer,GenreId,Price")] Movie movieToEdit)
         {
             if (ModelState.IsValid)
             {
