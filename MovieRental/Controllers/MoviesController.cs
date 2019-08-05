@@ -105,7 +105,7 @@ namespace MovieRental.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.GenreId = new SelectList(_context.Genre, "Id", "Name", movieToEdit.GenreId);
+            ViewBag.GenreId = new SelectList(_context.Genre, "GenreId", "Name", movieToEdit.GenreId);
             return View(movieToEdit);
         }
 
@@ -145,6 +145,33 @@ namespace MovieRental.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: Movies/Create
+        [HttpGet]
+        public IActionResult Create()
+        {
+            ViewBag.GenreId = new SelectList(_context.Genre, "GenreId", "Name");
+            return View();
+        }
+
+        // POST: Movies/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("MovieId,Name,ReleaseDate,Producer,GenreId,Price")] Movie movieToAdd)
+        {
+            if (ModelState.IsValid)
+            {
+                if (await _context.Movie.SingleOrDefaultAsync(l => l.MovieId == movieToAdd.MovieId) == null)
+                {
+                    _context.Add(movieToAdd);
+                    await _context.SaveChangesAsync();
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewBag.GenreId = new SelectList(_context.Genre, "GenreId", "Name", movieToAdd.GenreId);
+            return View(movieToAdd);
+        }
 
         protected override void Dispose(bool disposing)
         {

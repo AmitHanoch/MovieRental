@@ -59,13 +59,17 @@
         </table>
     </section>
 
-    <div class="fab"> + </div>
+    <div id="add-movie-fab" class="fab"> + </div>
 </section>
 
 <script>
     jQuery(document).ready(function ($) {
         $(".table-row").click(function () {
             window.location = "Movies/Details/" + $(this).data("item-id");
+        });
+
+         $("#add-movie-fab").click(function () {
+             window.location = "Movies/Create";
         });
     });
 </script>
