@@ -21,7 +21,7 @@
     <div>
         @Html.ActionLink(" Back", "Index", "", new { @class = "glyphicon glyphicon-chevron-left Icon" })
     </div>
-    <h4>Loan book</h4>
+    <h4>Loan movie</h4>
     <hr />
 
     <section class="form-horizontal">
@@ -29,7 +29,7 @@
         <div style="margin-bottom:10px">
             @Html.LabelFor(model => model.Customer.PersonalId, htmlAttributes: new { @style = "margin-bottom:5px" })
             <div>
-                @Html.DropDownList("CustomerId", ViewBag.CustomerId as SelectList, htmlAttributes: new { @class = "form-control", @id = "CustomerId", @onchange = "getRecommendedBook()" })
+                @Html.DropDownList("CustomerId", ViewBag.CustomerId as SelectList, htmlAttributes: new { @class = "form-control", @id = "CustomerId", onchange = @"getRecommendedMovie()" })
             </div>
         </div>
 
@@ -81,6 +81,7 @@
                 }
             }
         });
-    } ();
+    }
 
+    getRecommendedMovie();
 </script>
