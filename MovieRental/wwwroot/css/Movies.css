@@ -50,3 +50,13 @@
 .exit-movie-card .card-content {
     top: 10%;
 }
+
+#movie-delete-button {
+    width: 90%;
+    display: block;
+    margin: 0 auto;
+}
+
+#delete-movie-card {
+    height: 250px;
+}

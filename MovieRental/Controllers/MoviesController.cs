@@ -109,6 +109,43 @@ namespace MovieRental.Controllers
             return View(movieToEdit);
         }
 
+        // GET: Movies/Delete/5
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
+            Movie movieToDelete = await _context.Movie.Where(movie => movie.MovieId == id)
+                .Include(movie => movie.Genre)
+                .FirstOrDefaultAsync();
+
+            if (movieToDelete == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(movieToDelete);
+        }
+
+        // POST: Movies/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            Movie movieToDelete = await _context.Movie.Where(movie => movie.MovieId == id)
+               .Include(movie => movie.Genre)
+               .FirstOrDefaultAsync();
+
+            _context.Movie.Remove(movieToDelete);
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
