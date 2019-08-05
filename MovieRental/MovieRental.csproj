@@ -33,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Loans\Details.cshtml" />
     <Content Remove="wwwroot\css\Home.css" />
     <Content Remove="wwwroot\images\Popcorn.jpg" />
   </ItemGroup>
