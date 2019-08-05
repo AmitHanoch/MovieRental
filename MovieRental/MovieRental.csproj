@@ -44,4 +44,8 @@
     <None Include="wwwroot\css\Home.css" />
     <None Include="wwwroot\images\Popcorn.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+    <Folder Include="Views\Customers\" />
+  </ItemGroup>
 </Project>
