@@ -83,7 +83,7 @@ namespace MovieRental.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.GenreId = new SelectList(_context.Genre, "Id", "Name", movieToEdit.GenreId);
+            ViewBag.GenreId = new SelectList(_context.Genre, "GenreId", "Name", movieToEdit.GenreId);
             return View(movieToEdit);
         }
 
