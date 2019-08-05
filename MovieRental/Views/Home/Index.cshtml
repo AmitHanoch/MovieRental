@@ -1,10 +1,15 @@
-﻿@{
+﻿<link rel="stylesheet" href="~/css/Home.css" />
+
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <section class="fade-in-animation">
     <section id="title-section" class="row">
-        <img src="~/images/Popcorn.jpg" id="backgroud-image-title" />
+        <video autoplay id="backgroud-image-title">
+            <source src="~/images/popcornVideo.mp4" type="video/mp4">
+        </video>
         <h1 id="title">Movie Rental</h1>
         <h3 id="slogen">Binge, Learn, Relax, Enjoy</h3>
     </section>
@@ -16,15 +21,14 @@
                 <h3>New Releases</h3>
             </div>
             <div class="card-content">
-                 <div class="list">
-                     <ol>
-                         <li><a href="/Movies/Details">Spiderman 6</a><lili>
-                         <li><a href="#">Avengers: Infinity War</a></li>
-                         <li><a href="#">The Green Book</a></li>
-                         <li><a href="#">Aladin</a></li>
-                         <li><a href="#">The Lion King</a></li>
-                     </ol>
-                 </div>
+                <div class="list">
+                    <ol>
+                        @foreach (var moiveItem in ViewBag.NewReleases)
+                        {
+                            <li><a href="/Movies/Details/@moiveItem.MovieId">@moiveItem.Name</a></li>
+                        }
+                    </ol>
+                </div>
             </div>
         </div>
 
@@ -34,15 +38,27 @@
             </div>
             <div class="card-content">
                 <div class="list">
-                    <ol>
-                        <li><a href="#">Avatar</a></li>
-                        <li><a href="#">Avengers: Infinity War</a></li>
-                        <li><a href="#">Forest Gump</a></li>
-                        <li><a href="#">Resident Evil</a></li>
-                        <li><a href="#">Baby Driver</a></li>
+                    <ol id="mostPopularList">
                     </ol>
                 </div>
             </div>
         </div>
     </section>
 </section>
+
+<script>
+    (function () {
+        $.ajax({
+            url: "/Home/GetMostPopularForList",
+            success: function (result) {
+                var listItems = "";
+
+                $.each(result, function (index, value) {
+                    listItems = listItems + " " + "<li><a href='/Movies/Details/" + value.MovieId + "'>" + value.Name + "</a></li>"
+                });
+
+                $("#mostPopularList").html(listItems);
+            }
+        });
+    })();
+</script>

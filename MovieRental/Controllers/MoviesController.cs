@@ -69,26 +69,46 @@ namespace MovieRental.Controllers
             return View(movieQueried);
         }
 
-        public async Task<List<Movie>> TopFiveLoanedMovies()
+        // GET: Movies/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
-            var join_loans_movies_query = from movie in _context.Movie
-                                          join loan in _context.Loan on movie.MovieId equals loan.MovieId
-                                          select new
-                                          {
-                                              movieName = movie.Name
-                                          };
+            if (id == null)
+            {
+                return BadRequest();
+            }
 
-            var groupBy = join_loans_movies_query.GroupBy(res => res.movieName);
+            Movie movieToEdit = await _context.Movie.FindAsync(id);
+            if (movieToEdit == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
 
-            return new List<Movie>();
+            ViewBag.GenreId = new SelectList(_context.Genre, "GenreId", "Name", movieToEdit.GenreId);
+            return View(movieToEdit);
         }
 
-        // GET: Movie/Create
-        public ActionResult Create()
+        // POST: Books/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([Bind("Id,Name,ReleaseDate,ProducerId,Price,GenreId")] Movie movieToEdit)
         {
-            //ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name");
-            return View();
+            if (ModelState.IsValid)
+            {
+                if (_context.Movie.AsNoTracking().SingleOrDefault(x => x.MovieId == movieToEdit.MovieId) != null)
+                {
+                    _context.Entry(movieToEdit).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewBag.GenreId = new SelectList(_context.Genre, "Id", "Name", movieToEdit.GenreId);
+            return View(movieToEdit);
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

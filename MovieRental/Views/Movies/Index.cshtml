@@ -1,4 +1,6 @@
-﻿@model IEnumerable<MovieRental.Models.Movie>
+﻿<link rel="stylesheet" href="~/css/Movies.css" />
+
+@model IEnumerable<MovieRental.Models.Movie>
 
 @{
     ViewData["Title"] = "Movies Page";
@@ -32,27 +34,27 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr class="table-row" data-item-id="@item.MovieId">
-                    <td class="table-cell">
-                        <span> @Html.DisplayFor(modelItem => item.Name) </span>
-                    </td>
-                    <td class="table-cell">
-                        <span> @Html.DisplayFor(modelItem => item.ReleaseDate) </span>
-                    </td>
-                    <td class="table-cell">
-                        <span> @Html.DisplayFor(modelItem => item.Producer) </span>
-                    </td>
-                    <td class="table-cell">
-                        <span> @Html.DisplayFor(modelItem => item.Genre.Name) </span>
-                    </td>
-                    <td class="table-cell">
-                        <span> @Html.DisplayFor(modelItem => item.Price) </span>
-                    </td>
-                    <td class="table-cell">
-                        @Html.ActionLink(" ", "Edit", new { id = item.MovieId }, new { @class = "glyphicon glyphicon-pencil Icon" })  
-                        @Html.ActionLink(" ", "Delete", new { id = item.MovieId }, new { @class = "glyphicon glyphicon-trash Icon" })
-                    </td>
-                </tr>
+                    <tr class="table-row" data-item-id="@item.MovieId">
+                        <td class="table-cell">
+                            <span> @Html.DisplayFor(modelItem => item.Name) </span>
+                        </td>
+                        <td class="table-cell">
+                            <span> @Html.DisplayFor(modelItem => item.ReleaseDate) </span>
+                        </td>
+                        <td class="table-cell">
+                            <span> @Html.DisplayFor(modelItem => item.Producer) </span>
+                        </td>
+                        <td class="table-cell">
+                            <span> @Html.DisplayFor(modelItem => item.Genre.Name) </span>
+                        </td>
+                        <td class="table-cell">
+                            <span> @Html.DisplayFor(modelItem => item.Price) </span>
+                        </td>
+                        <td class="table-cell">
+                            @Html.ActionLink(" ", "Edit", new { id = item.MovieId }, new { @class = "glyphicon glyphicon-pencil Icon" })
+                            @Html.ActionLink(" ", "Delete", new { id = item.MovieId }, new { @class = "glyphicon glyphicon-trash Icon" })
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -62,7 +64,7 @@
 <script>
     jQuery(document).ready(function ($) {
         $(".table-row").click(function () {
-             window.location = "Movies/Details/" + $(this).data("item-id");
+            window.location = "Movies/Details/" + $(this).data("item-id");
         });
     });
 </script>
