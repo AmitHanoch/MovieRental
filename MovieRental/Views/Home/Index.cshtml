@@ -1,4 +1,7 @@
-﻿@{
+﻿<link rel="stylesheet" href="~/css/Home.css" />
+
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -18,14 +21,14 @@
                 <h3>New Releases</h3>
             </div>
             <div class="card-content">
-                 <div class="list">
-                     <ol>
-                         @foreach (var moiveItem in ViewBag.NewReleases)
-                         {
-                             <li><a href="/Movies/Details/@moiveItem.MovieId">@moiveItem.Name</a></li>
-                         }
-                     </ol>
-                 </div>
+                <div class="list">
+                    <ol>
+                        @foreach (var moiveItem in ViewBag.NewReleases)
+                        {
+                            <li><a href="/Movies/Details/@moiveItem.MovieId">@moiveItem.Name</a></li>
+                        }
+                    </ol>
+                </div>
             </div>
         </div>
 
@@ -36,7 +39,6 @@
             <div class="card-content">
                 <div class="list">
                     <ol id="mostPopularList">
-                       
                     </ol>
                 </div>
             </div>
