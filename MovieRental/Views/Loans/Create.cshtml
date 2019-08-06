@@ -1,4 +1,6 @@
-﻿@using Microsoft.AspNetCore.Http;
+﻿<link rel="stylesheet" href="~/css/Loans.css" />
+
+@using Microsoft.AspNetCore.Http;
 @model MovieRental.Models.Loan
 
 @{
@@ -18,70 +20,73 @@
 {
     @Html.AntiForgeryToken()
 
-    <div>
-        @Html.ActionLink(" Back", "Index", "", new { @class = "glyphicon glyphicon-chevron-left Icon" })
-    </div>
-    <h4>Loan movie</h4>
-    <hr />
-
-    <section class="form-horizontal">
-
-        <div style="margin-bottom:10px">
-            @Html.LabelFor(model => model.Customer.PersonalId, htmlAttributes: new { @style = "margin-bottom:5px" })
-            <div>
-                @Html.DropDownList("CustomerId", ViewBag.CustomerId as SelectList, htmlAttributes: new { @class = "form-control", @id = "CustomerId", onchange = @"getRecommendedMovie()" })
+    <section class="fade-in-animation">
+        <div class="card edit-loan-card">
+            <div class="card-title">
+                <h3>Create Loan</h3>
             </div>
-        </div>
+            <div class="card-content">
+                <div class="form-horizontal">
 
-        <div style="margin-bottom:10px">
-            @Html.LabelFor(model => model.Movie.Name, htmlAttributes: new { @style = "margin-bottom:5px" })
-            <div>
-                @Html.DropDownList("MovieId", ViewBag.MovieId as SelectList, htmlAttributes: new { @class = "form-control", @id = "MovieId" })
-            </div>
-            <span id="rec" style="color:darkred"></span>
-        </div>
+                    <div style="margin-bottom:10px">
+                        @Html.LabelFor(model => model.Customer.PersonalId, htmlAttributes: new { @style = "margin-bottom:5px" })
+                        <div>
+                            @Html.DropDownList("CustomerId", ViewBag.CustomerId as SelectList, htmlAttributes: new { @class = "form-control", @id = "CustomerId", onchange = @"getRecommendedMovie()" })
+                        </div>
+                    </div>
 
-        <div style="margin-bottom:10px">
-            @Html.LabelFor(model => model.LoanDate, "Loan Date", htmlAttributes: new { @style = "margin-bottom:5px" })
-            <div>
-                @Html.EditorFor(model => model.LoanDate, new { htmlAttributes = new { @class = "form-control", @style = "width:300px", @type = "date" } })
-            </div>
-        </div>
+                    <div style="margin-bottom:10px">
+                        @Html.LabelFor(model => model.Movie.Name, htmlAttributes: new { @style = "margin-bottom:5px" })
+                        <div>
+                            @Html.DropDownList("MovieId", ViewBag.MovieId as SelectList, htmlAttributes: new { @class = "form-control", @id = "MovieId" })
+                        </div>
+                        <span id="rec" style="color:darkred"></span>
+                    </div>
 
-        <div style="margin-bottom:10px">
-            @Html.LabelFor(model => model.ReturnDate, "Return Date", htmlAttributes: new { @style = "margin-bottom:5px" })
-            <div>
-                @Html.EditorFor(model => model.ReturnDate, new { htmlAttributes = new { @class = "form-control", @style = "width:300px", @type = "date" } })
+                    <div style="margin-bottom:10px">
+                        @Html.LabelFor(model => model.LoanDate, "Loan Date", htmlAttributes: new { @style = "margin-bottom:5px" })
+                        <div>
+                            @Html.EditorFor(model => model.LoanDate, new { htmlAttributes = new { @class = "form-control", @style = "width:300px", @type = "date" } })
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom:10px">
+                        @Html.LabelFor(model => model.ReturnDate, "Return Date", htmlAttributes: new { @style = "margin-bottom:5px" })
+                        <div>
+                            @Html.EditorFor(model => model.ReturnDate, new { htmlAttributes = new { @class = "form-control", @style = "width:300px", @type = "date" } })
+                        </div>
+                    </div>
+                    <div>
+                        <input type="submit" value="Add" class="btn btn-success" style="width:100%;margin-top:10px" />
+                    </div>
+                </div>
             </div>
-        </div>
-        <div>
-            <input type="submit" value="Add" class="btn btn-success" style="width:100%;margin-top:10px" />
         </div>
     </section>
 }
 
-<script>
-    function getRecommendedMovie() {
-        var customers = document.getElementById('CustomerId');
-        var custId = customers.options[customers.selectedIndex].text;
-        $.ajax({
-            url: 'getRecommendedMovie/?CustomerId=' + custId,
-            success: function (data) {
-                if (data !== "There is no recommended movie for this customer.") {
-                    var movies = document.getElementById('MovieId');
-                    for (var i = 0; i < movies.options.length; i++) {
-                        if (movies.options[i].text === data) {
-                            movies.selectedIndex = i;
-                            break;
+            <script>
+                function getRecommendedMovie() {
+                    var customers = document.getElementById('CustomerId');
+                    var custId = customers.options[customers.selectedIndex].text;
+                    $.ajax({
+                        url: 'getRecommendedMovie/?CustomerId=' + custId,
+                        success: function (data) {
+                            if (data !== "There is no recommended movie for this customer.") {
+                                var movies = document.getElementById('MovieId');
+                                for (var i = 0; i < movies.options.length; i++) {
+                                    if (movies.options[i].text === data) {
+                                        movies.selectedIndex = i;
+                                        break;
+                                    }
+                                }
+                                document.getElementById("rec").innerHTML = "The recommended movie is already chosen."
+                            } else {
+                                document.getElementById("rec").innerHTML = "No recommendations for this cutomer."
+                            }
                         }
-                    }
-                    document.getElementById("rec").innerHTML = "The recommended movie is already chosen."
-                } else {
-                    document.getElementById("rec").innerHTML = "No recommendations for this cutomer."
+                    });
                 }
-            }
-        });
-    }
 
-    getRecommendedMovie();
-</script>
+                getRecommendedMovie();
+            </script>

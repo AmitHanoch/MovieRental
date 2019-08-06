@@ -3,12 +3,11 @@
 @model IEnumerable<MovieRental.Models.Movie>
 
 @{
-    ViewData["Title"] = "Movies Page";
+    ViewBag.Title = "Movies";
 }
 
 <section class="fade-in-animation">
-
-    <h1 id="moviesTitle">Our Movies</h1>
+    <h1 id="pageTitle">Our Movies</h1>
     <section class="table-wrapper card">
         <table class="table">
             <thead>
@@ -59,12 +58,18 @@
             </tbody>
         </table>
     </section>
+
+    <div id="add-movie-fab" class="fab"> + </div>
 </section>
 
 <script>
     jQuery(document).ready(function ($) {
         $(".table-row").click(function () {
             window.location = "Movies/Details/" + $(this).data("item-id");
+        });
+
+         $("#add-movie-fab").click(function () {
+             window.location = "Movies/Create";
         });
     });
 </script>

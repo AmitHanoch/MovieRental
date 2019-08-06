@@ -69,27 +69,6 @@ namespace MovieRental.Controllers
             return "There is no recommended movie for this customer.";
         }
 
-        // GET: Loans/Details/5
-        [HttpGet]
-        public async Task<IActionResult> Details(int? movieId, int? customerId, DateTime? loanDate)
-        {
-            if (movieId == null || customerId == null || loanDate == null)
-            {
-                return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest);
-            }
-
-            Loan loan = await _context.Loan.FindAsync(movieId, customerId, loanDate);
-            if (loan == null)
-            {
-                return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound);
-            }
-
-            await _context.Entry(loan).Reference(l => l.Movie).LoadAsync();
-            await _context.Entry(loan).Reference(l => l.Customer).LoadAsync();
-
-            return View(loan);
-        }
-
         // GET: Loans/Create
         [HttpGet]
         public IActionResult Create()
@@ -112,12 +91,9 @@ namespace MovieRental.Controllers
                 {
                     _context.Add(loan);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
                 }
-                else
-                {
-                    return RedirectToAction(nameof(Index));
-                }
+
+                return RedirectToAction(nameof(Index));
             }
             ViewBag.MovieId = new SelectList(_context.Movie, "Id", "Name", loan.MovieId);
             ViewBag.CustomerId = new SelectList(_context.Customer, "Id", "PersonalId", loan.CustomerId);
@@ -130,7 +106,7 @@ namespace MovieRental.Controllers
         {
             if (movieId == null || customerId == null || loanDate == null)
             {
-                return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest);
+                return BadRequest();
             }
 
             Loan loan = await _context.Loan.FindAsync(movieId, customerId, loanDate);
@@ -172,17 +148,18 @@ namespace MovieRental.Controllers
         {
             if (movieId == null || customerId == null || loanDate == null)
             {
-                return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound);
+                return NotFound();
             }
 
-            Loan loan = await _context.Loan.FindAsync(movieId, customerId, loanDate);
+            Loan loan = await _context.Loan.Where(l => l.MovieId == movieId && l.CustomerId == customerId && l.LoanDate == loanDate)
+                .Include(l => l.Movie)
+                .Include(l => l.Customer)
+                .FirstOrDefaultAsync();
+
             if (loan == null)
             {
                 return RedirectToAction(nameof(Index));
             }
-
-            await _context.Entry(loan).Reference(l => l.Movie).LoadAsync();
-            await _context.Entry(loan).Reference(l => l.Customer).LoadAsync();
 
             return View(loan);
         }
