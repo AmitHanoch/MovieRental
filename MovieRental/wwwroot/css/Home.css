@@ -35,6 +35,26 @@
     margin-top: 32px;
 }
 
+#graphs-container {
+    display: flex;
+    margin-top: 32px;
+}
+
+.graph-card {
+    width: 40%;
+    margin: 0 auto;
+    height: 450px;
+}
+
+.graph-card .card-title{
+    height: 50px;
+}
+
+.graph-card .card-content{
+    padding: 0;
+    top: 50px;
+}
+
 .list-card {
     width: 40%;
     margin: 0 auto;
