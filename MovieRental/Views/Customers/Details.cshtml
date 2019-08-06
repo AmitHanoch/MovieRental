@@ -1,82 +1,40 @@
-﻿@model MovieRental.Models.Customer
+﻿<link rel="stylesheet" href="~/css/Customer.css" />
+@model MovieRental.Models.Customer
 
 @{
     ViewBag.Title = "Details";
 }
 
 <h2>Details</h2>
+<section class="fade-in-animation">
+    <div class="card customer-card">
+        <div class="card-title">
+            <h3>@Model.FirstName @Model.FamilyName</h3>
+        </div>
+        <div class="card-content">
+            <section id="detials-columns-container" class="row">
+                <div id="detials-title-column">
+                    <span class="column-text">@Html.DisplayNameFor(model => model.PersonalId): </span>
+                    <span class="column-text">@Html.DisplayNameFor(model => model.FirstName): </span>
+                    <span class="column-text">@Html.DisplayNameFor(model => model.FamilyName): </span>
+                    <span class="column-text">@Html.DisplayNameFor(model => model.Email): </span>
+                    <span class="column-text">@Html.DisplayNameFor(model => model.PhoneNumber): </span>
+                    <span class="column-text">@Html.DisplayNameFor(model => model.Address): </span>
+                    <span class="column-text">@Html.DisplayNameFor(model => model.Gender): </span>
+                    <span class="column-text">@Html.DisplayNameFor(model => model.Birthday): </span>
+                </div>
 
-<section>
-    <h4>Customer</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.PersonalId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PersonalId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FamilyName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FamilyName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Birthday)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Birthday)
-        </dd>
-
-    </dl>
+                <div id="detials-values-column">
+                    <span class="column-text">@Html.DisplayFor(model => model.PersonalId) </span>
+                    <span class="column-text">@Html.DisplayFor(model => model.FirstName) </span>
+                    <span class="column-text">@Html.DisplayFor(model => model.FamilyName) </span>
+                    <span class="column-text">@Html.DisplayFor(model => model.Email) </span>
+                    <span class="column-text">@Html.DisplayFor(model => model.PhoneNumber) </span>
+                    <span class="column-text">@Html.DisplayFor(model => model.Address) </span>
+                    <span class="column-text">@Html.DisplayFor(model => model.Gender) </span>
+                    <span class="column-text">@Html.DisplayFor(model => model.Birthday) </span>
+                </div>
+            </section>
+        </div>
+    </div>
 </section>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

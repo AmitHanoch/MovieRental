@@ -34,12 +34,12 @@ namespace MovieRental.Controllers
         {
             if (id == null)
             {
-                return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest);
+                return BadRequest();
             }
             Customer customer = await _context.Customer.FindAsync(id);
             if (customer == null)
             {
-                return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound);
+                return BadRequest();
             }
 
             return View(customer);
@@ -100,7 +100,7 @@ namespace MovieRental.Controllers
         {
             if (id == null)
             {
-                return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest);
+                return BadRequest();
             }
 
             Customer customer = await _context.Customer.FindAsync(id);
@@ -138,7 +138,7 @@ namespace MovieRental.Controllers
         {
             if (id == null)
             {
-                return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound);
+                return BadRequest();
             }
 
             Customer customer = await _context.Customer.FindAsync(id);
