@@ -1,6 +1,15 @@
 ﻿<link rel="stylesheet" href="~/css/Movies.css" />
-
+@using Microsoft.AspNetCore.Http;
 @model MovieRental.Models.Movie
+
+@{
+    int? loggedInUserRoleId = Context.Session.GetInt32("LoggedIn");
+    if (!loggedInUserRoleId.HasValue
+        || (loggedInUserRoleId != (int)MovieRental.General.Roles.MANAGER && loggedInUserRoleId != (int)MovieRental.General.Roles.STORE_OWNER))
+    {
+        Context.Response.Redirect("/Movies/Login");
+    }
+}
 
 @{
     ViewBag.Title = "Delete";

@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Http;
+﻿<link rel="stylesheet" href="~/css/Customer.css" />
+@using Microsoft.AspNetCore.Http;
 @model MovieRental.Models.Customer
 
 @{
@@ -18,82 +19,38 @@
 {
     @Html.AntiForgeryToken()
 
-        <div>
-            @Html.ActionLink(" Back", "Index", "", new { @class = "glyphicon glyphicon-chevron-left Icon" })
-        </div>
-        <h4>Delete Loan</h4>
-        <hr />
-
-        <section class="form-horizontal">
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.PersonalId)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.PersonalId)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.FirstName)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.FirstName)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.FamilyName)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.FamilyName)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Email)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Email)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.PhoneNumber)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.PhoneNumber)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Address)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Address)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Gender)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Gender)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Birthday)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Birthday)
-                </dd>
-
-            </dl>
-            <div>
-                <input type="submit" value="Delete" class="btn btn-danger" style="width:100%;margin-top:20px" />
+    <section class="fade-in-animation">
+        <div class="card customer-card" id="delete-customer-card">
+            <div class="card-title">
+                <h3>Delete @Model.FirstName @Model.FamilyName?</h3>
             </div>
-        </section>
-    
+            <div class="card-content">
+                <section id="details-columns-container" class="row">
+                    <div id="details-title-column">
+                        <span class="column-text">@Html.DisplayNameFor(model => model.PersonalId): </span>
+                        <span class="column-text">@Html.DisplayNameFor(model => model.FirstName): </span>
+                        <span class="column-text">@Html.DisplayNameFor(model => model.FamilyName): </span>
+                        <span class="column-text">@Html.DisplayNameFor(model => model.Email): </span>
+                        <span class="column-text">@Html.DisplayNameFor(model => model.PhoneNumber): </span>
+                        <span class="column-text">@Html.DisplayNameFor(model => model.Address): </span>
+                        <span class="column-text">@Html.DisplayNameFor(model => model.Gender): </span>
+                        <span class="column-text">@Html.DisplayNameFor(model => model.Birthday): </span>
+                    </div>
+
+                    <div id="details-values-column">
+                        <span class="column-text">@Html.DisplayFor(model => model.PersonalId)</span>
+                        <span class="column-text">@Html.DisplayFor(model => model.FirstName) </span>
+                        <span class="column-text">@Html.DisplayFor(model => model.FamilyName) </span>
+                        <span class="column-text">@Html.DisplayFor(model => model.Email) </span>
+                        <span class="column-text">@Html.DisplayFor(model => model.PhoneNumber) </span>
+                        <span class="column-text">@Html.DisplayFor(model => model.Address) </span>
+                        <span class="column-text">@Html.DisplayFor(model => model.Gender) </span>
+                        <span class="column-text">@Html.DisplayFor(model => model.Birthday) </span>
+                    </div>
+                </section>
+
+                <input id="delete-button" type="submit" value="Delete" class="btn btn-danger" />
+            </div>
+        </div>
+    </section>
 }

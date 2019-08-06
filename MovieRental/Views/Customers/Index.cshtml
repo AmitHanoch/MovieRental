@@ -15,7 +15,7 @@
     ViewBag.Title = "Customers";
 }
 
-<button class="btn btn-primary" onclick="toggleFilters()" style="margin-bottom:10px">
+<button class="btn btn-primary" id="expandFilters" style="margin-bottom:10px">
     Filters
 </button>
 <section id="filters" hidden style="margin-bottom:10px">
@@ -43,7 +43,6 @@
 </section>
 
 <section class="fade-in-animation">
-
     <h1 id="customersTitle">Customers</h1>
     <section class="table-wrapper card">
         <table class="table">
@@ -79,7 +78,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr class="table-row"  data-item-id="@item.CustomerId">
+                    <tr class="table-row" data-item-id="@item.CustomerId">
                         <td class="table-cell">
                             @Html.DisplayFor(modelItem => item.PersonalId)
                         </td>
@@ -113,24 +112,25 @@
             </tbody>
         </table>
     </section>
+    <div id="add-customer-fab" class="fab"> + </div>
 </section>
 
-<span style="font-size:20px">
-    @Html.ActionLink(" ", "Create", "", new { @class = "glyphicon glyphicon-plus Icon" })
-</span>
-
 <script type="text/javascript">
-    function toggleFilters() {
-        var filters = document.getElementById("filters");
-        if (filters.style.display !== "block") {
-            filters.style.display = "block";
-        } else {
-            filters.style.display = "none";
-        }
-    }
     jQuery(document).ready(function ($) {
+        $('#expandFilters').click(function () {
+            if ($('#filters').css('display') !== 'block') {
+               $('#filters').css('display', 'block');
+            } else {
+                $('#filters').css('display', 'none');
+            }
+        });
+
         $(".table-row").click(function () {
             window.location = "Customers/Details/" + $(this).data("item-id");
+        });
+
+        $("#add-customer-fab").click(function () {
+             window.location = "Customers/Create";
         });
     });
 </script>
