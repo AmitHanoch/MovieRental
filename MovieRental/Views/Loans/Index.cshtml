@@ -16,6 +16,33 @@
     ViewBag.Title = "Loans";
 }
 
+<button class="btn btn-primary" id="expandFilters" style="margin-bottom:10px">
+    Filters
+</button>
+<section id="filters" hidden style="margin-bottom:10px">
+    <form action="/Loans/Search" method="post">
+        <div class="row">
+            <div class="col-sm-2">
+                Movie Name:  @Html.DropDownList("Name", ViewBag.Name as SelectList, htmlAttributes: new { @class = "form-control", @id = "Name" })
+            </div>
+            <div class="col-sm-2">
+                PersonalId:  @Html.DropDownList("PersonalId", ViewBag.PersonalId as SelectList, htmlAttributes: new { @class = "form-control", @id = "PersonalId" })
+            </div>
+            <div class="col-sm-2">
+                Loan Date: <input type="date" name="LoanDate" class="form-control">
+            </div>
+            <div class="col-sm-2">
+                Return Date: <input type="date" name="ReturnDate" class="form-control">
+            </div>
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-success" style="margin-top:16px">
+                    Search
+                </button>
+            </div>
+        </div>
+    </form>
+</section>
+
 <section class="fade-in-animation">
 
     <h1 id="pageTitle">Loans</h1>
@@ -66,6 +93,18 @@
     </section>
 
     <div class="fab">
-        @Html.ActionLink("+", "Create", new Loan(), new { @style="text-decoration: none; color: white;"})
+        @Html.ActionLink("+", "Create", new Loan(), new { @style = "text-decoration: none; color: white;" })
     </div>
 </section>
+
+<script>
+    jQuery(document).ready(function ($) {
+        $('#expandFilters').click(function () {
+            if ($('#filters').css('display') !== 'block') {
+               $('#filters').css('display', 'block');
+            } else {
+                $('#filters').css('display', 'none');
+            }
+        });
+    });
+</script>
