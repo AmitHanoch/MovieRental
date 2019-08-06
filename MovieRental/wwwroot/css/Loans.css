@@ -13,19 +13,22 @@
     top: 25%;
 }
 
+.create-loan-card {
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 5%;
+    height: 450px;
+}
+
 .edit-loan-card {
     width: 40%;
     margin: 0 auto;
     margin-top: 5%;
-    height: 200px;
+    height: 180px;
 }
 
 .edit-loan-card .card-title {
     height: 15%;
-}
-
-.exit-loan-card .card-content {
-    top: 10%;
 }
 
 #delete-loan-card {
