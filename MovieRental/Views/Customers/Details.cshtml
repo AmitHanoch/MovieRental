@@ -1,5 +1,15 @@
 ﻿<link rel="stylesheet" href="~/css/Customer.css" />
+@using Microsoft.AspNetCore.Http;
 @model MovieRental.Models.Customer
+
+@{
+    int? loggedInUserRoleId = Context.Session.GetInt32("LoggedIn");
+    if (!loggedInUserRoleId.HasValue
+        || loggedInUserRoleId != (int)MovieRental.General.Roles.MANAGER)
+    {
+        Context.Response.Redirect("/Customers/Login");
+    }
+}
 
 @{
     ViewBag.Title = "Details";
