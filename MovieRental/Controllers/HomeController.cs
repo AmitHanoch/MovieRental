@@ -126,5 +126,31 @@ namespace MovieRental.Controllers
 
             return json;
         }
+
+        public string getNumberOfMovieLoans()
+        {
+            JArray returnObject = new JArray();
+
+            var query = from m in _context.Movie
+                         join l in _context.Loan on m.MovieId equals l.MovieId
+                         group m by m.Name into groupByMovies
+                         select new
+                         {
+                             movieName = groupByMovies.Key,
+                             loansNumber = groupByMovies.Count()
+                         };
+
+            foreach (var item in query)
+            {
+                JObject obj = new JObject();
+                obj["movieName"] = item.movieName;
+                obj["loansNumber"] = item.loansNumber;
+                returnObject.Add(obj);
+            }
+
+            string json = returnObject.ToString();
+
+            return json;
+        }
     }
 }

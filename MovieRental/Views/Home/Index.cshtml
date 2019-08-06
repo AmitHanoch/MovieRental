@@ -57,9 +57,10 @@
 
         <div class="card graph-card">
             <div class="card-title">
-                <h3>Genres By Movies Amount</h3>
+                <h3>Movies By Loans</h3>
             </div>
             <div class="card-content">
+                <svg id="bar" width="450" height="400"></svg>
             </div>
         </div>
     </section>
@@ -96,7 +97,7 @@
             var data = JSON.parse(result);
 
             // set the dimensions and margins of the graph
-            var width = 400
+            var width = 450
             height = 400
             margin = 20
 
@@ -151,5 +152,56 @@
                 .style("font-size", 17)
         }
     });
+    })();
+</script>
+
+<script>
+     (function () {
+        var svg = d3.select("#bar"),
+            margin = { top: 20, right: 20, bottom: 30, left: 40 },
+            width = +svg.attr("width") - margin.left - margin.right,
+            height = +svg.attr("height") - margin.top - margin.bottom;
+
+        var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+            y = d3.scaleLinear().rangeRound([height, 0]);
+
+        var g = svg.append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+        $.ajax({
+            url: "Home/getNumberOfMovieLoans", success: function (result) {
+                var data = JSON.parse(result);
+
+                x.domain(data.map(function (d) { return d.movieName; }));
+                y.domain([0, d3.max(data, function (d) { return d.loansNumber; })]);
+
+                g.append("g")
+                    .attr("class", "axis axis--x")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(d3.axisBottom(x));
+
+                g.append("g")
+                    .attr("class", "axis axis--y")
+                    .call(d3.axisLeft(y).tickValues(d3.range(0, 10, 1)))
+                    .append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", "0.71em")
+                    .attr("text-anchor", "end")
+                    .text("loansNumber");
+
+                g.selectAll(".bar")
+                    .data(data)
+                    .enter().append("rect")
+                    .style("opacity", 0.7)
+                    .attr("class", "bar")
+                    .attr("x", function (d) { return x(d.movieName); })
+                    .attr("y", function (d) { return y(d.loansNumber); })
+                    .attr("width", x.bandwidth())
+                    .attr("height", function (d) { return height - y(d.loansNumber); })
+                    .attr("fill", "#D62503");
+            }
+        });
     })();
 </script>
