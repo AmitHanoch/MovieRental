@@ -25,6 +25,14 @@ namespace MovieRental.Controllers
         // GET: Movies
         public async Task<ActionResult> Index()
         {
+            var genres = new SelectList(_context.Genre, "Name", "Name");
+            List<SelectListItem> genresList = new List<SelectListItem>();
+            genresList.Add(new SelectListItem { Text = "", Value = "" });
+            foreach (var item in genres)
+            {
+                genresList.Add(item);
+            }
+            ViewBag.GenreId = genresList;
             return View(await _context.Movie.Include(movie => movie.Genre).ToListAsync());
         }
         public ActionResult Login()
@@ -171,6 +179,49 @@ namespace MovieRental.Controllers
 
             ViewBag.GenreId = new SelectList(_context.Genre, "GenreId", "Name", movieToAdd.GenreId);
             return View(movieToAdd);
+        }
+
+        [HttpPost]
+        public ActionResult Search(string Id, string MovieName, string Producer, string GenreId, DateTime? ReleaseDate)
+        {
+            var genres = new SelectList(_context.Genre, "Name", "Name");
+            List<SelectListItem> genresList = new List<SelectListItem>();
+            genresList.Add(new SelectListItem { Text = "", Value = "" });
+
+            foreach (var item in genres)
+            {
+                genresList.Add(item);
+            }
+
+            ViewBag.GenreId = genresList;
+            IEnumerable<Movie> movies = _context.Movie.Include(b => b.Genre);
+
+            if (Id != null && Id != string.Empty)
+            {
+                movies = movies.Where(movie => movie.MovieId.ToString() == Id);
+            }
+
+            if (MovieName != null && MovieName != string.Empty)
+            {
+                movies = movies.Where(movie => movie.Name.Contains(MovieName));
+            }
+
+            if (Producer != null && Producer != string.Empty)
+            {
+                movies = movies.Where(movie => movie.Producer.Contains(Producer));
+            }
+
+            if (GenreId != null && GenreId != string.Empty)
+            {
+                movies = movies.Where(movie => movie.Genre.Name == GenreId);
+            }
+
+            if (ReleaseDate != null && ReleaseDate.HasValue)
+            {
+                movies = movies.Where(movie => movie.ReleaseDate.Equals(ReleaseDate));
+            }
+
+            return View("Index", movies);
         }
 
         protected override void Dispose(bool disposing)
