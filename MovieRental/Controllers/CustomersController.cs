@@ -120,7 +120,7 @@ namespace MovieRental.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_context.Loan.AsNoTracking().SingleOrDefault(x => x.CustomerId == customer.CustomerId) != null)
+                if (_context.Customer.AsNoTracking().SingleOrDefault(x => x.CustomerId == customer.CustomerId) != null)
                 {
                     _context.Update(customer);
                     await _context.SaveChangesAsync();
