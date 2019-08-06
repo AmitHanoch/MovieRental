@@ -24,34 +24,23 @@
         </environment>
     </head>
     <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <div class="navbar-brand">
-                        @Html.ActionLink("MovieRental", "Index", "Home")
-                    </div>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Movies", "Index", "Movies")</li>
-                        <li>@Html.ActionLink("Branches", "Index", "Branches")</li>
-                        <li>@Html.ActionLink("Loans", "Index", "Loans")</li>
-                        <li>@Html.ActionLink("Customers", "Login", "Customers")</li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
+        <header class="Header">
+            <aside class="PageLogo"></aside>
+            <nav class="mynavbar">
+                @Html.ActionLink("MovieRental", "Index", "Home")
+                @Html.ActionLink("Movies", "Index", "Movies")
+                @Html.ActionLink("Branches", "Index", "Branches")
+                @Html.ActionLink("Loans", "Index", "Loans")
+                @Html.ActionLink("Customers", "Login", "Customers")
+            </nav>
+        </header>
 
         <div class="container body-content">
             @RenderBody()
-            </div>
+        </div>
+        <footer style="position: fixed; bottom: 0; width:100%; text-align: center;">
+            <p style="margin-top:15px; margin-left:15px"> @DateTime.Now.Year - Movie Rental</p>
+        </footer>
 
         <environment include="Development">
             <script src="~/lib/jquery/dist/jquery.js"></script>

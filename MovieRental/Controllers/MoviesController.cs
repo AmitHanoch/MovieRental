@@ -149,6 +149,12 @@ namespace MovieRental.Controllers
 
             _context.Movie.Remove(movieToDelete);
 
+            List<Loan> loansToDelete = new List<Loan>();
+
+            loansToDelete = await _context.Loan.Where(loan => loan.MovieId == id).ToListAsync();
+
+            _context.Loan.RemoveRange(loansToDelete);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

@@ -1,7 +1,6 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
 for details on configuring this project to bundle and minify static web assets. */
 body {
-    padding-top: 50px;
     padding-bottom: 20px;
     background-color: #E0E0E0 !important;
 }
@@ -18,6 +17,52 @@ body {
     font-size: 20px;
     line-height: 1.4;
 }
+
+.Header {
+    background-color: #D62503;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    height: 70px;
+}
+
+.PageLogo {
+    width: 150px;
+    height: 70px;
+    background: url(../images/PopcornPin.png) no-repeat center;
+    background-size: contain;
+}
+
+.mynavbar {
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+}
+
+    .mynavbar a {
+        cursor: pointer;
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-shadow: 1px 1px 1px #777;
+        transition: background-color .2s;
+        font-size: 18px;
+    }
+
+        .mynavbar a:hover {
+            text-decoration: none;
+            background-color: #ba1e00;
+            cursor: pointer;
+            color: whitesmoke;
+            font-size: 22px;
+        }
 
 /* Make .svg files in the carousel display properly in older browsers */
 .carousel-inner .item img[src$=".svg"] {
