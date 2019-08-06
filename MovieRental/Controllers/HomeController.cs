@@ -111,5 +111,20 @@ namespace MovieRental.Controllers
 
             return returnObject;
         }
+
+        public string getMovieByGenre()
+        {
+            var groupedBooks = _context.Movie.GroupBy(m => m.Genre);
+            JObject returnObject = new JObject();
+
+            foreach (var item in groupedBooks)
+            {
+                returnObject[item.Key.Name] = item.Count();
+            }
+
+            string json = returnObject.ToString();
+
+            return json;
+        }
     }
 }
