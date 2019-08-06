@@ -23,6 +23,8 @@
     <Compile Remove="Migrations\20190730122112_Initial.Designer.cs" />
     <Compile Remove="Migrations\20190731155537_MovieRental.cs" />
     <Compile Remove="Migrations\20190731155537_MovieRental.Designer.cs" />
+    <Compile Remove="Migrations\20190805154715_Init.cs" />
+    <Compile Remove="Migrations\20190805154715_Init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,7 +47,6 @@
     <None Include="wwwroot\images\Popcorn.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Migrations\" />
     <Folder Include="Views\Customers\" />
   </ItemGroup>
 </Project>

@@ -92,7 +92,7 @@ namespace MovieRental.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind("Id,Name,ReleaseDate,ProducerId,Price,GenreId")] Movie movieToEdit)
+        public async Task<IActionResult> Edit([Bind("MovieId,Name,ReleaseDate,Producer,GenreId,Price")] Movie movieToEdit)
         {
             if (ModelState.IsValid)
             {
@@ -105,8 +105,72 @@ namespace MovieRental.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.GenreId = new SelectList(_context.Genre, "Id", "Name", movieToEdit.GenreId);
+            ViewBag.GenreId = new SelectList(_context.Genre, "GenreId", "Name", movieToEdit.GenreId);
             return View(movieToEdit);
+        }
+
+        // GET: Movies/Delete/5
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
+            Movie movieToDelete = await _context.Movie.Where(movie => movie.MovieId == id)
+                .Include(movie => movie.Genre)
+                .FirstOrDefaultAsync();
+
+            if (movieToDelete == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(movieToDelete);
+        }
+
+        // POST: Movies/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            Movie movieToDelete = await _context.Movie.Where(movie => movie.MovieId == id)
+               .Include(movie => movie.Genre)
+               .FirstOrDefaultAsync();
+
+            _context.Movie.Remove(movieToDelete);
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Movies/Create
+        [HttpGet]
+        public IActionResult Create()
+        {
+            ViewBag.GenreId = new SelectList(_context.Genre, "GenreId", "Name");
+            return View();
+        }
+
+        // POST: Movies/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("MovieId,Name,ReleaseDate,Producer,GenreId,Price")] Movie movieToAdd)
+        {
+            if (ModelState.IsValid)
+            {
+                if (await _context.Movie.SingleOrDefaultAsync(l => l.MovieId == movieToAdd.MovieId) == null)
+                {
+                    _context.Add(movieToAdd);
+                    await _context.SaveChangesAsync();
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewBag.GenreId = new SelectList(_context.Genre, "GenreId", "Name", movieToAdd.GenreId);
+            return View(movieToAdd);
         }
 
         protected override void Dispose(bool disposing)

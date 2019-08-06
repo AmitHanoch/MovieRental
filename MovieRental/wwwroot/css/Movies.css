@@ -17,7 +17,7 @@
     width: 40%;
     margin: 0 auto;
     margin-top: 5%;
-    height: 450px;
+    height: 500px;
 }
 
 .edit-movie-card .card-title {
@@ -26,4 +26,8 @@
 
 .exit-movie-card .card-content {
     top: 10%;
+}
+
+#delete-movie-card {
+    height: 250px;
 }
