@@ -50,3 +50,23 @@
 .edit-customer-card .card-content {
     top: 13%;
 }
+
+
+.add-customer-card {
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 3%;
+    height: 700px;
+}
+
+    .add-customer-card .card-title {
+        height: 9%;
+    }
+
+    .add-customer-card .card-content {
+        top: 12%;
+    }
+
+#delete-customer-card {
+    height: 400px;
+}
