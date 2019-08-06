@@ -24,6 +24,29 @@ namespace MovieRental.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            var movies = new SelectList(_context.Movie, "Name", "Name");
+            List<SelectListItem> moviesList = new List<SelectListItem>();
+            moviesList.Add(new SelectListItem { Text = "", Value = "" });
+
+            foreach (var item in movies)
+            {
+                moviesList.Add(item);
+            }
+
+            ViewBag.Name = moviesList;
+
+
+            var customers = new SelectList(_context.Customer, "PersonalId", "PersonalId");
+            List<SelectListItem> customersList = new List<SelectListItem>();
+            customersList.Add(new SelectListItem { Text = "", Value = "" });
+
+            foreach (var item in customers)
+            {
+                customersList.Add(item);
+            }
+
+            ViewBag.PersonalId = customersList;
+
             var movieRentalContext = _context.Loan.Include(l => l.Customer).Include(l => l.Movie);
             return View(await movieRentalContext.ToListAsync());
         }
@@ -197,6 +220,57 @@ namespace MovieRental.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        public ActionResult Search(string Name, string PersonalId, DateTime? LoanDate, DateTime? ReturnDate)
+        {
+            var movies = new SelectList(_context.Movie, "Name", "Name");
+            List<SelectListItem> moviesList = new List<SelectListItem>();
+            moviesList.Add(new SelectListItem { Text = "", Value = "" });
+
+            foreach (var item in movies)
+            {
+                moviesList.Add(item);
+            }
+
+            ViewBag.Name = moviesList;
+
+
+            var customers = new SelectList(_context.Customer, "PersonalId", "PersonalId");
+            List<SelectListItem> customersList = new List<SelectListItem>();
+            customersList.Add(new SelectListItem { Text = "", Value = "" });
+
+            foreach (var item in customers)
+            {
+                customersList.Add(item);
+            }
+
+            ViewBag.PersonalId = customersList;
+
+            IEnumerable<Loan> loans = _context.Loan.Include(b => b.Customer).Include(l => l.Movie);
+
+            if (Name != null && Name != string.Empty)
+            {
+                loans = loans.Where(loan => loan.Movie.Name == Name);
+            }
+
+            if (PersonalId != null && PersonalId != string.Empty)
+            {
+                loans = loans.Where(loan => loan.Customer.PersonalId.ToString() == PersonalId);
+            }
+
+            if (LoanDate != null && LoanDate.HasValue)
+            {
+                loans = loans.Where(loan => loan.LoanDate.Equals(LoanDate));
+            }
+
+            if (ReturnDate != null && ReturnDate.HasValue)
+            {
+                loans = loans.Where(loan => loan.ReturnDate.Equals(ReturnDate));
+            }
+
+            return View("Index", loans);
         }
 
         protected override void Dispose(bool disposing)
