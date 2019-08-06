@@ -18,14 +18,14 @@
     <section id="lists-container">
         <div class="card list-card">
             <div class="card-title">
-                <h3>New Releases</h3>
+                <h3>Genres And Average Ages</h3>
             </div>
             <div class="card-content">
                 <div class="list">
                     <ol>
-                        @foreach (var moiveItem in ViewBag.NewReleases)
+                        @foreach (var item in ViewBag.GenresAndAverageAges)
                         {
-                            <li><a href="/Movies/Details/@moiveItem.MovieId">@moiveItem.Name</a></li>
+                            <li>@item.GenreName - @item.AverageAge</li>
                         }
                     </ol>
                 </div>

@@ -1,8 +1,9 @@
-
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieRental.Models;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace MovieRental.Controllers
 
         public async Task<IActionResult> Index()
         {
-            ViewBag.NewReleases = await this.GetNewRealeasesForList();
+            ViewBag.GenresAndAverageAges = this.GetGenresAndAverageAges();
 
             return View();
         }
@@ -31,15 +32,6 @@ namespace MovieRental.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        private async Task<List<Movie>> GetNewRealeasesForList()
-        {
-            return await _context.Movie
-                .OrderByDescending(movie => movie.ReleaseDate)
-                .Take(NUMBER_IN_LIST)
-                .Include(movie => movie.Genre)
-                .ToListAsync();
         }
 
         public JsonResult GetMostPopularForList()
@@ -80,21 +72,44 @@ namespace MovieRental.Controllers
 
             return Json(returnObject);
         }
-                    if(loanCount.MovieId == item.MovieId)
-                    {
-                        obj["NumberOfLoans"] = loanCount.NumberOfLoans;
-                    }
-                }
+
+        public List<JObject> GetGenresAndAverageAges()
+        {
+            List<JObject> returnObject = new List<JObject>();
+
+            // select movies.genreName, AVG(datediff(year, cust.Birthday, getdate())) as avgAge
+            // from Loan loans
+            // join Customer cust on cust.CustomerId = loans.CustomerId
+            // join (select m.MovieId, g.Name as genreName from Movie m, Genre g where m.GenreId = g.GenreId) as movies
+            //    on movies.MovieId = loans.MovieId
+            // group by movies.genreName
+            var query = from loans in _context.Loan
+                        join cust in _context.Customer on loans.CustomerId equals cust.CustomerId
+                        join movies in (from m in _context.Movie
+                                        join g in _context.Genre on m.GenreId equals g.GenreId
+                                        select new
+                                        {
+                                            MovieId = m.MovieId,
+                                            GenreName = g.Name
+                                        }) on loans.MovieId equals movies.MovieId
+                        group new { movies, cust } by movies.GenreName into grouped
+                        select new
+                        {
+                            GenreName = grouped.Key,
+                            AverageAge = grouped.Average(x => Math.Floor((double)DateTime.Now.Subtract(x.cust.Birthday).Days / 365)),
+                        };
+                        
+
+            foreach (var item in query)
+            {
+                JObject obj = new JObject();
+                obj["GenreName"] = item.GenreName;
+                obj["AverageAge"] = item.AverageAge;
 
                 returnObject.Add(obj);
             }
 
-            returnObject = returnObject.Where(item => item["NumberOfLoans"] != null)
-                .OrderByDescending(item => item["NumberOfLoans"])
-                .Take(5).ToList();
-
-
-            return Json(returnObject);
+            return returnObject;
         }
     }
 }
