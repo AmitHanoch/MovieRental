@@ -11,7 +11,9 @@
             <source src="~/images/popcornVideo.mp4" type="video/mp4">
         </video>
         <h1 id="title">Movie Rental</h1>
-        <h3 id="slogen">Binge, Learn, Relax, Enjoy</h3>
+        <canvas id="slogen" width="400" height="100">
+            Binge, Learn, Relax, Enjoy
+        </canvas>
     </section>
 
 
@@ -48,6 +50,12 @@
 
 <script>
     (function () {
+        var c = document.getElementById("slogen");
+        var ctx = c.getContext("2d");
+        ctx.font = "30px Arial";
+        ctx.strokeStyle = "#FFF";
+        ctx.strokeText("Binge, Learn, Relax, Enjoy",10,50);
+
         $.ajax({
             url: "/Home/GetMostPopularForList",
             success: function (result) {
