@@ -6,7 +6,7 @@
 @{
     int? loggedInUserRoleId = Context.Session.GetInt32("LoggedIn");
     if (!loggedInUserRoleId.HasValue
-        || (loggedInUserRoleId != (int)MovieRental.General.Roles.MANAGER && loggedInUserRoleId != (int)MovieRental.General.Roles.STORE_OWNER))
+        || loggedInUserRoleId != (int)MovieRental.General.Roles.MANAGER)
     {
         Context.Response.Redirect("/Loans/Login");
     }
