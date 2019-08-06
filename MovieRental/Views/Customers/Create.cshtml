@@ -1,0 +1,91 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model MovieRental.Models.Customer
+
+@{
+    int? loggedInUserRoleId = Context.Session.GetInt32("LoggedIn");
+    if (!loggedInUserRoleId.HasValue
+        || (loggedInUserRoleId != (int)MovieRental.General.Roles.MANAGER && loggedInUserRoleId != (int)MovieRental.General.Roles.STORE_OWNER))
+    {
+        Context.Response.Redirect("/Customers/Login");
+    }
+}
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        @Html.ActionLink(" Back", "Index", "", new { @class = "glyphicon glyphicon-chevron-left Icon" })
+    </div>
+    <h4>Add new customer</h4>
+    <hr />
+
+    <section class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.PersonalId, htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.EditorFor(model => model.PersonalId, new { htmlAttributes = new { @class = "form-control", @style = "width:300px" } })
+            </div>
+        </div>
+
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @style = "width:300px" } })
+            </div>
+        </div>
+
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.FamilyName, htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.EditorFor(model => model.FamilyName, new { htmlAttributes = new { @class = "form-control", @style = "width:300px" } })
+            </div>
+        </div>
+
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @style = "width:300px" } })
+            </div>
+        </div>
+
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @style = "width:300px" } })
+            </div>
+        </div>
+
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.Address, htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @style = "width:300px" } })
+            </div>
+        </div>
+
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.EditorFor(model => model.Gender, "Gender", new { htmlAttributes = new { @class = "form-control", @style = "width:300px" } })
+            </div>
+        </div>
+
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.Birthday, "Birthdate", htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control", @style = "width:300px", @type = "date" } })
+            </div>
+        </div>
+
+        <div>
+            <input type="submit" value="Add" class="btn btn-success" style="width:100%;margin-top:10px" />
+        </div>
+
+    </section>
+}

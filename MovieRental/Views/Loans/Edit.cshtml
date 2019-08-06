@@ -1,4 +1,6 @@
-﻿@using Microsoft.AspNetCore.Http;
+﻿<link rel="stylesheet" href="~/css/Loans.css" />
+
+@using Microsoft.AspNetCore.Http;
 @model MovieRental.Models.Loan
 
 @{
@@ -17,30 +19,31 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
-    <div>
-        @Html.ActionLink(" Back", "Index", "", new { @class = "glyphicon glyphicon-chevron-left Icon" })
-    </div>
-    <h4>Edit Loan</h4>
-    <hr />
-
-
-    <section class="form-horizontal">
-        @Html.HiddenFor(model => model.MovieId)
-        @Html.HiddenFor(model => model.CustomerId)
-        @Html.HiddenFor(model => model.LoanDate)
-
-
-        <div style="margin-bottom:10px">
-            @Html.LabelFor(model => model.ReturnDate, "Return Date", htmlAttributes: new { @style = "margin-bottom:5px" })
-            <div>
-                @Html.EditorFor(model => model.ReturnDate, new { htmlAttributes = new { @class = "form-control", @style = "width:300px", @type = "date" } })
+    <section class="fade-in-animation">
+        <div class="card edit-loan-card">
+            <div class="card-title">
+                <h3>Edit Loan</h3>
             </div>
-        </div>
+            <div class="card-content">
 
-        <div>
-            <input type="submit" value="Edit" class="btn btn-success" style="width:100%;margin-top:10px" />
+                <div class="form-horizontal">
+                    @Html.HiddenFor(model => model.MovieId)
+                    @Html.HiddenFor(model => model.CustomerId)
+                    @Html.HiddenFor(model => model.LoanDate)
+
+                    <div style="margin-bottom:10px; margin-top: 10px;">
+                        @Html.LabelFor(model => model.ReturnDate, "Return Date", htmlAttributes: new { @style = "margin-bottom:5px" })
+                        <div>
+                            @Html.EditorFor(model => model.ReturnDate, new { htmlAttributes = new { @class = "form-control", @style = "width:300px", @type = "date" } })
+                        </div>
+                    </div>
+
+                    <div>
+                        <input type="submit" value="Edit" class="btn btn-success" style="width:100%;margin-top:10px" />
+                    </div>
+                </div>
+
+            </div>
         </div>
     </section>
 }
-

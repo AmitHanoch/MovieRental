@@ -1,0 +1,33 @@
+﻿.loan-card {
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 10%;
+    height: 200px;
+}
+
+.loan-card .card-title {
+    height: 25%;
+}
+
+.loan-card .card-content {
+    top: 25%;
+}
+
+.edit-loan-card {
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 5%;
+    height: 200px;
+}
+
+.edit-loan-card .card-title {
+    height: 15%;
+}
+
+.exit-loan-card .card-content {
+    top: 10%;
+}
+
+#delete-loan-card {
+    height: 250px;
+}
