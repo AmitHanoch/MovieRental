@@ -40,6 +40,11 @@
     margin-top: 32px;
 }
 
+#popular-movies-api-container {
+    display: flex;
+    margin-top: 32px;
+}
+
 .graph-card {
     width: 40%;
     margin: 0 auto;
@@ -59,4 +64,15 @@
     width: 40%;
     margin: 0 auto;
     height: 360px;
+}
+
+.popular-movies-card {
+    width: 60%;
+    margin: 0 auto;
+    height: 450px;
+}
+
+#TopRatedTMDBListWrapper {
+    height: 370px;
+    width: 90%;
 }

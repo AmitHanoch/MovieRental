@@ -65,6 +65,20 @@
         </div>
     </section>
 
+    <section id="popular-movies-api-container">
+        <div class="card popular-movies-card">
+            <div class="card-title">
+                <h3>Top Rated Movies - By TMDB</h3>
+            </div>
+            <div class="card-content">
+                <div id="TopRatedTMDBListWrapper" class="list scrollable">
+                    <ol id="TopRatedTMDBList">
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </section>
 
 <script>
@@ -79,6 +93,19 @@
                 });
 
                 $("#mostPopularList").html(listItems);
+            }
+        });
+
+         $.ajax({
+            url: "https://api.themoviedb.org/3/movie/top_rated?api_key=74646cdb096c42edb220cdab5822f8d8&language=en-US&page=1",
+            success: function (result) {
+                var listItems = "";
+
+                $.each(result.results, function (index, value) {
+                    listItems = listItems + " " + "<li><span>" + "<span class='bold'>Title: </span>" + value.title + "<span class='bold'> Popularity: </span>" + value.popularity + "</span></li>";
+                });
+
+                $("#TopRatedTMDBList").html(listItems);
             }
         });
     })();
