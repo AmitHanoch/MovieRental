@@ -1,4 +1,4 @@
-﻿
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieRental.Models;
@@ -46,32 +46,40 @@ namespace MovieRental.Controllers
         {
             List<JObject> returnObject = new List<JObject>();
 
-            //select top 5 m.Name, loans.NumberOfLoans from Movie m,
+            // select top 5 m.Name, loans.NumberOfLoans from Movie m,
             // (select l.MovieId, COUNT(l.MovieId) as NumberOfLoans from Loan l group by l.MovieId) loans
             // where m.MovieId = loans.MovieId
             // order by loans.NumberOfLoans DESC
             var query = from m in _context.Movie
+                        join l in (from loans in _context.Loan
+                              group loans by loans.MovieId into sub
+                              select new
+                              {
+                                  MovieId = sub.Key,
+                                  NumberOfLoans = sub.Count()
+                              })
+                              on m.MovieId equals l.MovieId
+                        orderby l.NumberOfLoans descending
                         select new
                         {
                             Name = m.Name,
                             MovieId = m.MovieId,
-                            NumberOfLoans = (from loans in _context.Loan
-                                             group loans by loans.MovieId into sub
-                                             select new
-                                             {
-                                                 MovieId = sub.Key,
-                                                 NumberOfLoans = sub.Count()
-                                             })
+                            NumberOfLoans = l.NumberOfLoans
                         };
 
-            foreach (var item in query)
+
+            foreach (var item in query.Take(5))
             {
                 JObject obj = new JObject();
                 obj["Name"] = item.Name;
                 obj["MovieId"] = item.MovieId;
+                obj["NumberOfLoans"] = item.NumberOfLoans;
 
-                foreach (var loanCount in item.NumberOfLoans)
-                {
+                returnObject.Add(obj);
+            }
+
+            return Json(returnObject);
+        }
                     if(loanCount.MovieId == item.MovieId)
                     {
                         obj["NumberOfLoans"] = loanCount.NumberOfLoans;
