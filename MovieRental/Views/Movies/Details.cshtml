@@ -38,4 +38,27 @@
             </section>
         </div>
     </div>
+    <div id="twitter">
+        <textarea id="txtbox" style="width:300px; height:50px" onblur="quotes()" placeholder="Tweet what's new in Our movie rental shops"></textarea>
+        <br />
+        <a href="https://twitter.com/share" class="twitter-share-button" data-url="none" data-text="">Tweet</a>
+    </div>
 </section>
+
+<script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+<script>
+    function quotes() {
+        var txt = document.querySelector('textarea').value;
+        var tbutton = document.querySelector('.twitter-share-button');
+        if (tbutton) {
+            tbutton.parentNode.removeChild(tbutton);
+        }
+        var newA = document.createElement('a');
+        newA.setAttribute('href', 'https://twitter.com/share');
+        newA.setAttribute('class', 'twitter-share-button');
+        newA.setAttribute('data-url', 'none');
+        newA.setAttribute('data-text', txt);
+        document.getElementById("twitter").appendChild(newA);
+        twttr.widgets.load();
+    }
+</script>
