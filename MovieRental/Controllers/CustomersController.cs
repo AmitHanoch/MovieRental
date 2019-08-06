@@ -157,6 +157,13 @@ namespace MovieRental.Controllers
         {
             Customer customer = await _context.Customer.FindAsync(id);
             _context.Customer.Remove(customer);
+
+            List<Loan> loansToDelete = new List<Loan>();
+
+            loansToDelete = await _context.Loan.Where(loan => loan.CustomerId == id).ToListAsync();
+
+            _context.Loan.RemoveRange(loansToDelete);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
