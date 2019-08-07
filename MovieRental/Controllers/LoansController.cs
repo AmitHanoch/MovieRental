@@ -63,6 +63,9 @@ namespace MovieRental.Controllers
             var customers = await _context.Customer.ToListAsync();
 
             List<int[]> tempDatasset = new List<int[]>();
+
+            // Creating a unsymmetric matrix that each row contains the movies that a certain 
+            // customer has lent
             foreach (var customer in customers)
             {
                 var moviesIdsPerCustomer = loans.Where(l => l.CustomerId == customer.CustomerId)
@@ -73,13 +76,21 @@ namespace MovieRental.Controllers
 
             int[][] dataset = tempDatasset.ToArray();
 
+            // threshold represents that only 1 movie that the specified customer has lent
+            // needs to be found in the other loans of other customers in order to recommend it
+            // for him
             Apriori apriori = new Apriori(threshold: 1, confidence: 0);
+
+            // machine learning section
             AssociationRuleMatcher<int> classifier = apriori.Learn(dataset);
 
+            // movies ids of the specified customer according to his loans
             var moviesPerSpecifiedCustomer = loans
                 .Where(l => l.Customer.PersonalId == (string)customerId)
                 .Select(b => b.MovieId).ToArray();
 
+            // make an intersection between his movies and try to find from the dataset
+            // all rows that contains atleast 1 of his movies that he had lent
             int[][] matches = classifier.Decide(moviesPerSpecifiedCustomer);
 
             if (matches.Length > 0)
