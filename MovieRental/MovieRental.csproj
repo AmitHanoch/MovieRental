@@ -25,6 +25,10 @@
     <Compile Remove="Migrations\20190731155537_MovieRental.Designer.cs" />
     <Compile Remove="Migrations\20190805154715_Init.cs" />
     <Compile Remove="Migrations\20190805154715_Init.Designer.cs" />
+    <Compile Remove="Migrations\20190807145316_Initial.cs" />
+    <Compile Remove="Migrations\20190807145316_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190807152058_Initial.cs" />
+    <Compile Remove="Migrations\20190807152058_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

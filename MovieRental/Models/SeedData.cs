@@ -19,27 +19,22 @@ namespace MovieRental.Models
                     context.Genre.AddRange(
                         new Genre
                         {
-                            //GenreId = 1,
                             Name = "Kids"
                         },
                         new Genre
                         {
-                            //GenreId = 2,
                             Name = "Fantasy"
                         },
                         new Genre
                         {
-                            //GenreId = 3,
                             Name = "Drama"
                         },
                         new Genre
                         {
-                            //GenreId = 4,
                             Name = "Comics"
                         },
                         new Genre
                         {
-                            //GenreId = 5,
                             Name = "Cooking"
                         }
                     );
@@ -51,25 +46,41 @@ namespace MovieRental.Models
                     context.Branch.AddRange(
                         new Branch
                         {
-                            //BranchId = 1,
                             Address = "Raanana",
                             LocationX = 32.18489140558821,
                             LocationY = 34.87343421596455
                         },
                         new Branch
                         {
-                            //BranchId = 2,
                             Address = "Rehovot",
                             LocationX = 31.897669361644866,
                             LocationY = 34.813842901551524
                         },
                         new Branch
                         {
-                            //BranchId = 3,
                             Address = "Ganei Tikva",
                             LocationX = 32.06244122293621,
                             LocationY = 34.87091187713511
+                        },
+                        new Branch
+                        {
+                            Address = "Ramat Gan",
+                            LocationX = 32.0857,
+                            LocationY = 34.8221
+                        },
+                        new Branch
+                        {
+                            Address = "Holon",
+                            LocationX = 32.0157620,
+                            LocationY = 34.7837875
+                        },
+                        new Branch
+                        {
+                            Address = "Shoham",
+                            LocationX = 31.9982668,
+                            LocationY = 34.9467233
                         }
+
                     );
                 }
 
@@ -80,13 +91,13 @@ namespace MovieRental.Models
                         new User
                         {
                             Username = "admin",
-                            Password = "1234",
+                            Password = "admin",
                             RoleId = 1,
                         },
                         new User
                         {
-                            Username = "shopKeeer",
-                            Password = "1234",
+                            Username = "shopkeeper",
+                            Password = "shopkeeper",
                             RoleId = 2
                         }
                     );
@@ -98,7 +109,6 @@ namespace MovieRental.Models
                     context.Customer.AddRange(
                         new Customer
                         {
-                            //CustomerId = 1,
                             PersonalId = "222223445",
                             FirstName = "mama",
                             FamilyName = "Reala",
@@ -111,7 +121,6 @@ namespace MovieRental.Models
                         },
                         new Customer
                         {
-                            //CustomerId = 2,
                             PersonalId = "222223446",
                             FirstName = "papa",
                             FamilyName = "Reala",
@@ -123,7 +132,6 @@ namespace MovieRental.Models
                         },
                         new Customer
                         {
-                            //CustomerId = 3,
                             PersonalId = "232423446",
                             FirstName = "Sami",
                             FamilyName = "Hacabay",
@@ -135,7 +143,6 @@ namespace MovieRental.Models
                         },
                         new Customer
                         {
-                            //CustomerId = 4,
                             PersonalId = "223423456",
                             FirstName = "lily",
                             FamilyName = "Bloom",
@@ -147,8 +154,7 @@ namespace MovieRental.Models
                         },
                         new Customer
                         {
-                            //CustomerId = 5,
-                            PersonalId = "222223446",
+                            PersonalId = "222223444",
                             FirstName = "Tal",
                             FamilyName = "Hanoch",
                             Gender = "male",
@@ -168,7 +174,7 @@ namespace MovieRental.Models
                     context.Movie.AddRange(
                         new Movie
                         {
-                            Name = "Harry Poter",
+                            Name = "Harry Potter",
                             ReleaseDate = new DateTime(2000, 5, 5),
                             GenreId = 1,
                             Producer = "David Heyman",
@@ -181,6 +187,14 @@ namespace MovieRental.Models
                             GenreId = 3,
                             Producer = "John H. Williams",
                             Price = 3.90m,
+                        },
+                        new Movie
+                        {
+                            Name = "Princess Bride",
+                            ReleaseDate = new DateTime(1989, 5, 12),
+                            GenreId = 2,
+                            Producer = "John H. Williams",
+                            Price = 5.90m,
                         },
                         new Movie
                         {
@@ -210,7 +224,7 @@ namespace MovieRental.Models
                         {
                             Name = "Venom",
                             ReleaseDate = new DateTime(2020, 4, 2),
-                            GenreId = 2,
+                            GenreId = 4,
                             Producer = "John H. Williams",
                             Price = 4.90m,
                         }
@@ -227,15 +241,71 @@ namespace MovieRental.Models
                         {
                             CustomerId = 1,
                             MovieId = 1,
-                            LoanDate = new DateTime(2010, 4, 2),
-                            ReturnDate = new DateTime(2010, 5, 1),
+                            LoanDate = new DateTime(2019, 4, 2),
+                            ReturnDate = new DateTime(2019, 5, 1),
+                        },
+                        new Loan
+                        {
+                            CustomerId = 2,
+                            MovieId = 4,
+                            LoanDate = new DateTime(2018, 3, 2),
+                            ReturnDate = new DateTime(2019, 4, 1),
+                        },
+                        new Loan
+                        {
+                            CustomerId = 3,
+                            MovieId = 1,
+                            LoanDate = new DateTime(2019, 3, 2),
+                            ReturnDate = new DateTime(2019, 5, 1),
+                        },
+                        new Loan
+                        {
+                            CustomerId = 4,
+                            MovieId = 5,
+                            LoanDate = new DateTime(2018, 3, 2),
+                            ReturnDate = new DateTime(2019, 4, 1),
+                        },
+                        new Loan
+                        {
+                            CustomerId = 5,
+                            MovieId = 2,
+                            LoanDate = new DateTime(2019, 3, 11),
+                            ReturnDate = new DateTime(2019, 4, 1),
+                        },
+                        new Loan
+                        {
+                            CustomerId = 5,
+                            MovieId = 3,
+                            LoanDate = new DateTime(2019, 3, 22),
+                            ReturnDate = new DateTime(2019, 4, 1),
+                        },
+                        new Loan
+                        {
+                            CustomerId = 4,
+                            MovieId = 2,
+                            LoanDate = new DateTime(2019, 3, 29),
+                            ReturnDate = new DateTime(2019, 4, 1),
                         },
                         new Loan
                         {
                             CustomerId = 2,
                             MovieId = 2,
-                            LoanDate = new DateTime(2010, 3, 2),
-                            ReturnDate = new DateTime(2010, 4, 1),
+                            LoanDate = new DateTime(2019, 3, 14),
+                            ReturnDate = new DateTime(2019, 6, 11),
+                        },
+                        new Loan
+                        {
+                            CustomerId = 2,
+                            MovieId = 6,
+                            LoanDate = new DateTime(2019, 3, 2),
+                            ReturnDate = new DateTime(2019, 12, 1),
+                        },
+                        new Loan
+                        {
+                            CustomerId = 4,
+                            MovieId = 7,
+                            LoanDate = new DateTime(2019, 12, 2),
+                            ReturnDate = new DateTime(2019, 12, 6),
                         }
                     );
                 }
